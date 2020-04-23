@@ -8,16 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
-  <title>mySAL - Rooms </title>
+  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script> 
+  <title>mySAL - Chat </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="css/custom.css" rel="stylesheet">
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+  <!-- custom.css includes styling for the chat box -->
+  <link href="css/custom.css" rel="stylesheet"> 
 
 </head>
 
@@ -97,6 +98,135 @@
 
       </ul>
     <!-- End of Sidebar -->
+
+    <!-- Chat Box Open Button (float on top of everything)-->
+    <button onclick="openChatBox();"id="chatButton" class="btn btn-primary chatButton">Chat</button>
+    <!-- Chat Box Component (float on top of everything) -->
+    <div class="chatBoxContainer row" id="chatBox">
+      
+      <!-- Chat List (left-hand-side) -->
+      <div class="col1">
+        <ul id="chatList" class="chatList">
+          <div class="chatListContainer">
+            <!-- Search contact Textarea -->
+            <div class="form-inline md-form form-sm mt-0" style="padding: 7px; padding-left: 10px;">
+              <i class="fas fa-search" aria-hidden="true"></i>
+              <input id="searchContactBox" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search contact"
+                aria-label="Search">
+            </div>
+            <!-- Dynamic List of contacts -->
+            <li class="chatListRow row d-flex flex-row align">
+              <div class="chatListProfile">
+                <img class="chatListProfilePicture rounded-circle" src=timmy.png>
+              </div>
+              <text class="chatListName">Timmy</text>
+            </li>
+            <li class="chatListRow row d-flex flex-row align">
+              <div class="chatListProfile">
+                <img class="chatListProfilePicture rounded-circle" src=timmy.png>
+              </div>
+              <text class="chatListName">Timmy</text>
+            </li>
+            <li class="chatListRow row d-flex flex-row align">
+              <div class="chatListProfile">
+                <img class="chatListProfilePicture rounded-circle" src=timmy.png>
+              </div>
+              <text class="chatListName">Timmy</text>
+            </li>
+            <li class="chatListRow row d-flex flex-row align">
+              <div class="chatListProfile">
+                <img class="chatListProfilePicture rounded-circle" src=timmy.png>
+              </div>
+              <text class="chatListName">Timmy</text>
+            </li>
+
+          </div>
+          
+
+        </ul>
+      </div>
+      <!-- Message Area (right-hand-side) -->
+      <div class="col2">
+        <!-- Header: showing current chat recipient name -->
+        <div class="chatBoxHeader row">
+          <custom name="chatHeaderRecipient" class="chatHeaderRecipient font-weight-bold">Timmy</custom>
+          <div class="closeChatBoxButton"> 
+            <i class="fa fa-times" style="z-index: 1" onclick="closeChatBox();"></i>
+          </div>
+
+          
+        </div>
+        <!-- Dynamic Chat Log Box -->
+        <ul id="chatLog" class="chatLog list-group">
+          <li class="chatLogRow row d-flex flex-row">
+            <div class="senderProfile">
+              <img class="senderProfilePicture rounded-circle" src=timmy.png>
+            </div>
+            <div class="senderMessage">
+              <text>Hello! This is a sample message with a lot of text. If anyone knows how to have the profile picture align with the top of this paragraph please change the code.</text>
+            </div>
+          </li>
+        </ul>
+        <!-- Chat Message Input Box -->
+        <textarea class="chatInputBox" id="messageToSend" placeholder="Enter your message here..."></textarea>
+        <!-- Buttons -->
+        <div class="chatSendArea row align-items-center">
+          <button class="btn col font-weight-bold">Invite</button>
+          <button onclick="sendTestMessage();" class="btn col font-weight-bold">Test</button>
+          <button class="fas fa-laugh btn font-weight-bold chatInputEmojiButton"></button>
+          <button id="sendButton" class="btn col font-weight-bold" onclick="sendMessage();">Send</button>
+        </div>
+      </div>
+
+      <!-- Chat Box Script -->
+      <script>
+        /* listen for "Enter" key press when chat box open */
+        $("#messageToSend").keypress(function(event) { 
+            if (event.keyCode === 13) { 
+                event.preventDefault(); // disable new line function of enter key
+                $("#sendButton").click(); // send message
+            } 
+        }); 
+        /* listen for "Enter" key press to search contact*/
+        $("#searchContactBox").keypress(function(event) { 
+            if (event.keyCode === 13) { 
+                /* add implementation here to search for contact using keyword */
+            } 
+        }); 
+        function sendMessage(){
+          var msg = document.getElementById("messageToSend").value;
+          if(msg != ""){
+            msg = "<li class='list-group-item' style='text-align: right'>" + "<text class='userMessage'>" + msg +"</text></li>";
+            document.getElementById("chatLog").innerHTML += msg;
+            document.getElementById("messageToSend").value = '';
+            document.getElementById("chatLog").scrollTop = document.getElementById("chatLog").scrollHeight;
+            document.getElementById("messageToSend").placeholder = "Enter your message here..."
+          } else{
+            document.getElementById("messageToSend").placeholder = "Cannot send empty message! :("
+          }
+        }
+        function openChatBox(){
+          document.getElementById("chatBox").style.visibility = "visible";
+          document.getElementById("chatButton").style.visibility = "hidden";
+        }
+        function closeChatBox(){
+          document.getElementById("chatBox").style.visibility = "hidden";
+          document.getElementById("chatButton").style.visibility = "visible";
+        }
+        function sendTestMessage(){
+          var testMsg;
+          testMsg = "<li class='chatLogRow row d-flex flex-row'> <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div> <div class='senderMessage'><text>This is a test message.</text></div></li>"
+          document.getElementById("chatLog").innerHTML += testMsg;
+        }
+        function addSampleContact(user){
+          var list = $('#chatList')[0];
+          
+        }
+      </script>
+
+
+    </div>
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -286,10 +416,10 @@
           </div>
 
           <!-- Messages and Chat Window -->
-          
+
         </div>
 
-        
+
       </div>
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">

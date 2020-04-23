@@ -383,40 +383,6 @@
             </div>
           </div>
 
-          <!-- Chat Window 1 -->
-          <div class="btn-group dropup" style="position: fixed; bottom: 100px; right: 80px">
-            <button class="open-button btn-primary" onclick="openForm()">Chat</button>
-
-            <div class="chat-popup" id="myForm">
-              <form action="" class="form-container">
-                <h4 id="ChatRecipientName" style="font: bold">Emily Fowler</h4>
-                <div class="incomingMessage">
-                  <div class="text-truncate">How do I import this file to Eclipse?</div>
-                  <div class="small text-gray-500">Emily Fowler · 58m</div>
-                </div>
-
-                <form class="form-inline">
-                  <div class="form-group mb-2">
-                    <textarea placeholder="Type message.." name="msg" required></textarea>
-                  </div>
-                  
-                  <button type="submit" class="btn btn-primary mb-2">Send</button>
-                </form>
-                <button type="button" class="btn btn-secondary" onclick="closeForm()">Close</button>
-              </form>
-            </div>
-
-            <script>
-            function openForm() {
-              document.getElementById("myForm").style.display = "block";
-            }
-
-            function closeForm() {
-              document.getElementById("myForm").style.display = "none";
-            }
-            </script>
-          </div>
-
           
 
         </div>
