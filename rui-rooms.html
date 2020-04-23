@@ -17,6 +17,7 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -194,7 +195,7 @@
                     <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
                     <div class="status-indicator bg-success"></div>
                   </div>
-                  <div class="font-weight-bold">
+                  <div class="font-weight-bold" data-toggle="modal" data-target="#ChatWindowModal">
                     <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
@@ -355,7 +356,7 @@
                           <td>SAL 109</td>
                           <td>CSCI 201 Lab Check off</td>
                           <td>Tommy Trojan</td>
-                          <td><a href="blank.html">Join</a></td>
+                          <td><a href="room.html">Join</a></td>
                           <td>Invite</td>
                         </tr>
                         <tr>
@@ -381,6 +382,42 @@
               </div>
             </div>
           </div>
+
+          <!-- Chat Window 1 -->
+          <div class="btn-group dropup" style="position: fixed; bottom: 100px; right: 80px">
+            <button class="open-button btn-primary" onclick="openForm()">Chat</button>
+
+            <div class="chat-popup" id="myForm">
+              <form action="" class="form-container">
+                <h4 id="ChatRecipientName" style="font: bold">Emily Fowler</h4>
+                <div class="incomingMessage">
+                  <div class="text-truncate">How do I import this file to Eclipse?</div>
+                  <div class="small text-gray-500">Emily Fowler · 58m</div>
+                </div>
+
+                <form class="form-inline">
+                  <div class="form-group mb-2">
+                    <textarea placeholder="Type message.." name="msg" required></textarea>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary mb-2">Send</button>
+                </form>
+                <button type="button" class="btn btn-secondary" onclick="closeForm()">Close</button>
+              </form>
+            </div>
+
+            <script>
+            function openForm() {
+              document.getElementById("myForm").style.display = "block";
+            }
+
+            function closeForm() {
+              document.getElementById("myForm").style.display = "none";
+            }
+            </script>
+          </div>
+
+          
 
         </div>
         <!-- /.container-fluid -->
@@ -423,6 +460,32 @@
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom-right Chat Window Modal-->
+  <div class="modal" id="ChatWindowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="position:fixed; bottom:0px; right:0px; margin:0px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chat with NAME</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">This room is private and requires a password to be joined.</div>
+        <form>
+          <div class="form-group modal-body">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Submit</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
