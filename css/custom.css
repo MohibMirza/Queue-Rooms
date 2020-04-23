@@ -1,9 +1,10 @@
 .chatButton{
   height: 40px;
+  width: 100px;
   position: fixed;
   bottom: 10px;
-  right: 20px;
-  visibility: hidden;
+  right: 25px;
+  visibility: visible;
   z-index: 1;
 }
 
@@ -14,7 +15,7 @@
   position: fixed;
   bottom: 10px;
   right: 20px;
-  visibility: visible;
+  visibility: hidden;
   z-index: 1;
 }
 
