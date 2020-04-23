@@ -29,8 +29,8 @@ public class FirebaseQuery {
 	
 	public List<Alert> query(String root) throws Exception {
 		
-		String key = root + "mytest1-ab6ae-firebase-adminsdk-hk5br-401f095bd6.json";
-		String databaseURL = "https://mytest1-ab6ae.firebaseio.com";
+		String key = root + "cs201-project-c4168-firebase-adminsdk-qfw6t-b660ec6eb8";
+		String databaseURL = "https://cs201-project-c4168.firebaseio.com/";
 		
 		FileInputStream serviceAccount =
 				  new FileInputStream(key);
@@ -41,8 +41,6 @@ public class FirebaseQuery {
 				  .build();
 
 		FirebaseApp.initializeApp(options);
-		
-		addAlert();
 		
 		FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
 		List<Alert> data = new ArrayList<Alert>(); 

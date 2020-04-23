@@ -7,10 +7,10 @@
 					java.sql.SQLException,java.sql.Statement" %>
 
 <%
-	
+	String userID = request.getParameter("uid");
 	
 	String fullname = "temp";
-
+	
 %>
 
 
@@ -143,10 +143,7 @@
 			
 			<%@page import="java.util.List,queuerooms2.Alert,queuerooms2.FirebaseQuery" %>
 			<%
-				String url = "https://mytest1-ab6ae.firebaseio.com/table1/table1_doc1";
-				FirebaseQuery query = new FirebaseQuery();
-				List<Alert> alerts = query.query(request.getRealPath("/"));
-				int alertListSize = alerts.size();
+				List<Alert> alerts = query.queryAlerts(userID);
 			%>
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
@@ -161,17 +158,33 @@
                   Alerts Center
                 </h6>
                 <%
-                	int [] tempI = new int [3];
-                	String [] tempS = new String [3];
-                	for(int i = 0; i < alertListSize; i++) {     
-                		String temp = "" + i;
+                	
+                	for(int i = 0; i < alerts.size(); i++) {     
                 %>
                 		<a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="mr-3">
                         	<!-- will need some java code here -->
-                          <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                          </div>
+                          <% 
+                          	switch(alerts.get(i).alertType) {
+                          	case PRIMARY:
+                          		%><div class="icon-circle bg-primary"> 
+                          			<i class="fas fa-file-alt text-white"></i>
+                          		  </div>
+                          		<%
+                          		break;
+                          	case SUCCESS:
+                          		%><div class="icon-circle bg-success">
+                          		    <i class="fas fa-donate text-white"></i>
+                          		  </div>
+                          		<%
+                          		break;
+                          	case WARNING:
+                          		%><div class="icon-circle bg-warning">
+                          		    <i class="fas fa-exclamation-triangle text-white"></i>
+                                  </div>
+                          		<%
+                          	}
+                          %>
                         </div>
                         <div>
                           <div class="small text-gray-500"><%= alerts.get(i).alertTime %></div>
@@ -182,7 +195,7 @@
                 	}
                 %>
                 
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <a class="dropdown-item text-center small text-gray-500" href="alert-page.jsp">Show All Alerts</a>
               </div>
             </li>
 
@@ -207,48 +220,19 @@
                 %>
                 		<a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="dropdown-list-image mr-3">
+                          <!-- firebase call here to get the profile picture -->
                           <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                          <!-- does this change color based on the user's online status? bg-success, bg-warning, or nothing-->
                           <div class="status-indicator bg-success"></div>
                         </div>
                         <div class="font-weight-bold">
-                          <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                          <div class="small text-gray-500">Emily Fowler · 58m</div>
+                          <div class="text-truncate"><!-- insert message text here --></div>
+                          <div class="small text-gray-500"><!-- insert sender name --> · <!-- insert message time --></div>
                         </div>
                       </a>
                 <%
                 	}
                 %>
-                
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
             </li>
@@ -320,7 +304,9 @@
 
             <!-- Content Column -->
             <div class="col-lg-6 mb-4">
-
+			  <%
+			  	//List<RoomQueue> 
+			  %>
               <!-- Collapsable Card Example -->
               <div class="card shadow mb-4">
                 <!-- Card Header - Accordion -->
@@ -330,19 +316,16 @@
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseCardExample">
                   <div class="card-body">
-                      <h4 class="small font-weight-bold">CSCI 170 <span class="float-right">3rd in line</span></h4>
+                    <%  for(int i = 0; i < 2; i++) { %>
+                    <h4 class="small font-weight-bold">CSCI 170 <span class="float-right">3rd in line</span></h4>
                     <div class="progress mb-4">
+                      <!-- bg-info vs bg-danger? -->
                       <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-
-                    <h4 class="small font-weight-bold">CSCI 104 <span class="float-right">20th in line</span></h4>
-                    <div class="progress mb-4">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                    <% } %>
                   </div>
                 </div>
               </div>
-
             </div>
 
 
@@ -370,30 +353,18 @@
                         </tr>
                       </thead>
                       <tbody>
+                      <% 
+                      	for(int i = 0; i < 3; i++) {
+                      %>
                         <tr>
-                          <td>CSCI 201</td>
-                          <td>SAL 109</td>
-                          <td>CSCI 201 Lab Check off</td>
-                          <td>Tommy Trojan</td>
+                          <td>CSCI 201</td> <!-- class -->
+                          <td>SAL 109</td> <!-- location ?? -->
+                          <td>CSCI 201 Lab Check off</td> <!-- desc -->
+                          <td>Tommy Trojan</td> <!-- host -->
                           <td><a href="blank.html">Join</a></td>
                           <td>Invite</td>
                         </tr>
-                        <tr>
-                          <td>CSCI 270</td>
-                          <td>SAL 103</td>
-                          <td>CSCI 270 Office Hours</td>
-                          <td>Tammy Trojan</td>
-                          <td>Join</td>
-                          <td>Invite</td>
-                        </tr>
-                        <tr>
-                          <td>CSCI 104</td>
-                          <td>SAL 110</td>
-                          <td>CSCI 104 Assignment 2 OH</td>
-                          <td>CP Traveller</td>
-                          <td>Join</td>
-                          <td>Invite</td>
-                        </tr>
+                      <% } %>
                       </tbody>
                     </table>
                   </div>
