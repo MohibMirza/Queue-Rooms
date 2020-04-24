@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
 
   <meta charset="utf-8">
@@ -11,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>mySAL - Rooms </title>
+  <title>mySAL - Room - CSCI201 </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,7 +17,6 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -28,7 +25,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-   <!-- Sidebar -->
+    <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
           <!-- Sidebar - Brand -->
@@ -107,6 +104,17 @@
             <i class="fa fa-bars"></i>
           </button>
 
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -197,7 +205,7 @@
                     <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
                     <div class="status-indicator bg-success"></div>
                   </div>
-                  <div class="font-weight-bold" data-toggle="modal" data-target="#ChatWindowModal">
+                  <div class="font-weight-bold">
                     <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
@@ -241,8 +249,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Tommy Trojan</span>
-                <img class="img-profile rounded-circle" src=tommy.jpg>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -275,117 +283,121 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Home</h1>
-            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
-          </div>
+          <h1 class="h3 mb-4 text-gray-800">CSCI 201</h1>
 
-          <!-- Content Row -->
           <div class="row">
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-lg-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Important Message</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">"Room location for CSCI 201 lab check off has moved to SAL 109"</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
-
-              <!-- Collapsable Card Example -->
+            <div class="col-lg-12">
               <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                  <h6 class="m-0 font-weight-bold text-primary">Your Current Queues</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardExample">
-                  <div class="card-body">
-                      <h4 class="small font-weight-bold">CSCI 170<span class="float-right">3rd in line</span></h4>
-                    <div class="progress mb-4">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-					
-                    <h4 class="small font-weight-bold">CSCI 104<span class="float-right">20th in line</span></h4>
-                    <div class="progress mb-4">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Description</h6>
                 </div>
+                <div class="card-body">
+                  Please come to the front of the room for check off when it's your turn. Please arrive min. 5 mins early.
+                  </div>
               </div>
-			
             </div>
-
-
           </div>
 
-
-          <!-- Begin Table -->
-          <div class ="row">
-            <div class ="col-lg-12 mb-4">
-              <div class="card shadow">
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Rooms</h6>
+                  <div class="row align-items-center">
+                    <div class = "col-sm">
+                      <h6 class="m-0 font-weight-bold text-primary mb-2">Queue</h6> 
+                    </div>
+                    <div class = "row-right">
+                      <!-- Join Queue Button triggers modal-->
+                      <a href="#JoinQueueModal" class="btn btn-primary" data-toggle="modal">Join</a>
+                      <a href="#QuitQueueModal" class="btn btn-warning" data-toggle="modal">Cancel</a>
+                    </div>
+            
+                  </div>
+                  
                 </div>
+
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
-                          <th>Class</th>
-                          <th>Location</th>
-                          <th>Description</th>
-                          <th>Host</th>
-                          <th>Queue</th>
-                          <th>Members</th>
+                          <th>#</th>
+                          <th>Name</th>
+                          <th>Estimate Wait Time</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>CSCI 201</td>
-                          <td>SAL 109</td>
-                          <td>CSCI 201 Lab Check off</td>
-                          <td>Tommy Trojan</td>
-                          <td><a href="room.html">Join</a></td>
-                          <td>Invite</td>
+                          <td>1</td>
+                          <td>Abby B</td>
+                          <td>5 mins</td>
                         </tr>
                         <tr>
-                          <td>CSCI 270</td>
-                          <td>SAL 103</td>
-                          <td>CSCI 270 Office Hours</td>
-                          <td>Tammy Trojan</td>
-                          <td>Join</td>
-                          <td>Invite</td>
+                          <td>2</td>
+                          <td>Bobby C</td>
+                          <td>15 mins</td>
                         </tr>
                         <tr>
-                          <td>CSCI 104</td>
-                          <td>SAL 110</td>
-                          <td>CSCI 104 Assignment 2 OH</td>
-                          <td>CP Traveller</td>
-                          <td>Join</td>
-                          <td>Invite</td>
+                          <td>3</td>
+                          <td>Carly D</td>
+                          <td>25 mins</td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>Danny E</td>
+                          <td>35 mins</td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td>Edward F</td>
+                          <td>45 mins</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
+
+
                 </div>
               </div>
             </div>
+
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Message Board</h6>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="font-weight-bold">
+                      <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                      <div class="small text-gray-500">Emily Fowler · 18m</div>
+                    </div>
+
+                    <br>
+
+                    <div class="font-weight-bold">
+                      <div class="text-truncate">Where is everyone sitting?</div>
+                      <div class="small text-gray-500">CP Tommy · 20m</div>
+                    </div>
+
+                    <br>
+
+                    <div class="font-weight-bold">
+                      <div class="text-truncate">Make sure to check Piazza for tips!</div>
+                      <div class="small text-gray-500">CP Tommy · 32m</div>
+                    </div>
+
+
+
+                </div>
+              </div>
+            </div>
+
+            
           </div>
 
-          
+        
 
         </div>
         <!-- /.container-fluid -->
@@ -397,7 +409,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; mySAL 2020</span>
+            <span>Copyright &copy; Your Website 2019</span>
           </div>
         </div>
       </footer>
@@ -433,26 +445,37 @@
     </div>
   </div>
 
-  <!-- Bottom-right Chat Window Modal-->
-  <div class="modal" id="ChatWindowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style="position:fixed; bottom:0px; right:0px; margin:0px;">
+  <!-- Join Queue Modal-->
+  <div class="modal fade" id="JoinQueueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Chat with NAME</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Join Queue Successful!</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">This room is private and requires a password to be joined.</div>
-        <form>
-          <div class="form-group modal-body">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-          </div>
-        </form>
+        <div class="modal-body">If you want to cancel your position, click the "Quit" button next to the queue</div>
         <div class="modal-footer">
-          <button class="btn btn-primary" type="button" data-dismiss="modal">Submit</button>
+          <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quit Queue Modal-->
+  <div class="modal fade" id="QuitQueueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm quiting queue</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">If you leave the queue now, your position will be lost and you will have to join again from the end of the queue.</div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Quit</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -469,12 +492,8 @@
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  <!-- Custom script from frontend-zi-->
+  <script src="frontend-zi.js"></script>
 
 </body>
 

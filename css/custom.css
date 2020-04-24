@@ -1,0 +1,174 @@
+.chatButton{
+  height: 40px;
+  width: 100px;
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+  visibility: visible;
+  z-index: 1;
+}
+
+.chatBoxContainer{
+  width: 600px;
+  height: 600px;
+  background-color: #eaecee;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.chatBoxContainer .row{
+  margin: auto;
+}
+.chatBoxContainer .col1{
+  float: left;
+  width: 200px;
+  background-color: #30363b;
+}
+
+.closeChatBoxButton{
+  padding: 10px;
+  position: absolute;
+  right: 0px;
+}
+
+.closeChatBoxButton .fa:hover{
+  color: white;
+}
+.chatBoxContainer .col2{
+  float: right;
+  width: 400px;
+}
+.chatHeaderRecipient{
+  float: left;
+  padding: 10px;
+  font-size: large;
+  margin: 0 auto;
+}
+#chatBoxCloseButton{
+  float: right;
+  padding: 10px;
+}
+.chatLog{
+  background-color: white;
+  width: 380px;
+  height: 380px;
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+.chatListContainer{
+  background-color: #30363b;
+  height: 45px;
+  width: 200px;
+  position: absolute;
+  left: 0px;
+}
+.chatInputBox{
+  background-color: white;
+  width: 380px;
+  height: 100px;
+  position: absolute;
+  right: 10px;
+  bottom: 60px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.chatInputEmojiButton{
+  color: #87b8e0;
+}
+.chatSendArea{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.chatSendArea > button{
+  margin-left: 10px;
+  color: white;
+  background-color: #30363b;
+}
+
+.chatLog .list-group-item{
+  border: none;
+  overflow-wrap: break-word;
+  padding: 10px;
+}
+
+.chatLog .list-group-item{
+  color: black;
+}
+
+.chatLog .row{
+  margin: 8px 10px;
+  align-items: center;
+}
+
+.senderMessage{
+  width: 300px;
+  overflow-wrap: break-word;
+  background-color: #e7eaec;
+  padding: 5px;
+  border-radius: 10px;
+  color: black;
+  display: inline-block;
+  
+}
+
+
+.userMessage{
+  background-color: #ffd200;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+
+.chatLog .senderProfile{
+  width: 30px;
+  margin-right: 10px;
+}
+
+.senderProfilePicture{
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.userMessage{
+  text-align: right;
+}
+
+.chatListProfile{
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.chatListProfilePicture{
+  height: 30px;
+  width: 30px;
+}
+.chatListRow{
+  padding: 10px 10px;
+  background-color: #3e454c;
+  border-color: #30363b;
+  border-style: solid;
+  border-width: 2px;
+  
+}
+
+.chatListRow:hover{
+  background-color:#30363b ;
+}
+.chatListName{
+  font: bold;
+  font-size: 15px;
+  color: white;
+  align-items: center;
+  padding-top: 5px;
+}
