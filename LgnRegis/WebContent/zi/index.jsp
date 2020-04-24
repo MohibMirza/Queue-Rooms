@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="b_end.fb_info"%>
 <%@page import="b_end.fb_info_json"%>
+<%@page import="b_end.firebase_info_getter"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>mySAL - Home</title>
 
   <!-- Custom fonts for this template-->
@@ -24,7 +25,7 @@
   
   <script type="text/javascript"> 
   <%
-  String user_token=(String)request.getAttribute("UserID");
+  String UserID=(String)request.getAttribute("UserID");
   String access_token=(String)request.getParameter("access_token");
   fb_info_json client_info=null;
   fb_info obj_Client_details=null;
@@ -33,26 +34,47 @@
   String fb_email=(String)request.getAttribute("fb_email");
   String fb_id=(String)request.getAttribute("fb_id");		  
   String fb_pic_url=(String)request.getAttribute("fb_pic");	
+
+  String friend_name=(String)request.getAttribute("friend_name");
   
+  if(friend_name==null)
+  {
+	  friend_name="";
+  }
   
    %>
-var ch = "<%=user_token %>" ;
+var new_friend='<%=friend_name%>';
+	
+$(document).ready(function(){
+	
+
+	});
+
+
+var UserID_js = "<%=UserID %>" ;
 var test="<%=access_token %>";
-if(!(ch=="null"))
-{console.log(ch);
+if(!(UserID_js=="null"))
+{console.log(UserID_js);
  console.log(test);	
 }
 else{
-var fb_user="<%=fb_usr %>";
+ UserID_js="<%=fb_usr %>";
 var fb_emailid="<%=fb_email %>";
 var fb_Uid="<%=fb_id %>"; 
 var fb_pic_url="<%=fb_pic_url %>";
 
-console.log(fb_user);
+console.log(UserID_js);
 console.log(fb_emailid);
 console.log(fb_Uid);
 console.log(fb_pic_url);
 }
+
+<% if(UserID==null || UserID.equals(""))
+{
+	UserID=fb_id;
+}
+	
+	%>
 </script> 
 
 </head>
@@ -61,7 +83,28 @@ console.log(fb_pic_url);
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
+<script>
+  function addfriend()
+  {
+	  var friend_id = document.getElementById("friend_id").value;
+	  var dd="entered addfreind";
+	  console.log(dd);
+	  $.ajax({
+			url: "add_friend",
+			data: {
+				f_id: friend_id
+			},
+			success: function(result) {
+				$("html").empty();
+				console.log(result);
+			    $("html").append(result);  
+			    
+			}
+		});
+	    
+	  
+  }
+  </script>
 
     <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -90,15 +133,15 @@ console.log(fb_pic_url);
 
           <!-- Nav Item - Pages Collapse Menu -->
           <li class="nav-item">
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Friends_header" aria-expanded="true" aria-controls="Friends_header">
                   <i class="fas fa-fw fa-user"></i>
                   <span>Friends</span>
               </a>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                      <h6 class="collapse-header">Favorites:</h6>
+              <div id="Friends_header" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded" id="Friends">
+                      <h6 class="collapse-header">My Friends:</h6>
                       <a class="collapse-item" href="blank.html">Timmy Nook</a>
-                      <a class="collapse-item" href="blank.html">Tommy Nook</a>
+                      <a class="collapse-item" href="blank.html"><%=friend_name%></a>
                   </div>
               </div>
           </li>
@@ -297,6 +340,10 @@ console.log(fb_pic_url);
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
+                <div class="dropdown-divider"></div>
+                <i class="dropdown-item" href="#" data-toggle="modal">
+                  User ID: <%=UserID %>
+                </i>
               </div>
             </li>
 
@@ -380,6 +427,7 @@ console.log(fb_pic_url);
 
 
             <!-- Page Heading -->
+            
             <div class="d-sm-flex align-items-center justify-content-between mb-2">
                 <h1 class="h3 mb-0 text-gray-800">Today at SAL</h1>
             </div>
@@ -388,7 +436,16 @@ console.log(fb_pic_url);
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h2 class="h6 mb-0 text-gray-800">Classes and events taking place here today.</h2>
             </div>
-
+            
+            <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                <h1 class="h3 mb-0 text-gray-800">Add Friends!</h1>
+                <div class="input-group mb-3">
+  					<input type="text" class="form-control" placeholder="Enter a UserID" id="friend_id">
+  					<div class="input-group-append">
+    				<button class="btn btn-success" onclick="addfriend()">Add</button>
+  				</div>
+				</div>
+            </div>
 
                 <!-- Color System -->
                 <div class="row">
@@ -551,6 +608,8 @@ console.log(fb_pic_url);
   <!-- Page level custom scripts -->
   <script src="zi/js/demo/chart-area-demo.js"></script>
   <script src="zi/js/demo/chart-pie-demo.js"></script>
+  
+  
 
 </body>
 
