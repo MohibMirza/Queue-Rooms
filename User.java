@@ -6,22 +6,24 @@ public class User {
 	
 	public String userid;
 	public String username;
+	public String picurl;
 	public List<String> friends;
 	
 	public User() {
 		friends = new ArrayList<String>();
 	}
 	
-	public User(String theusername, String theuserid) {
+	public User(String theusername, String theuserid, String thepicurl) {
 		userid = theuserid;
+		picurl = thepicurl;
 		username = theusername;
 		friends = new ArrayList<String>();
 		FirebaseQuery.updateUser(this);
 	}
 	
 	//STATIC FUNCTIONS
-	public static void createUser(String theusername, String theuserid) {
-		User a = new User(theusername, theuserid);
+	public static void createUser(String theusername, String theuserid, String thepicurl) {
+		User a = new User(theusername, theuserid, thepicurl);
 		return;
 	}
 	
@@ -89,6 +91,14 @@ public class User {
 
 	public void setFriends(List<String> friends) {
 		this.friends = friends;
+	}
+
+	public String getPicurl() {
+		return picurl;
+	}
+
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
 	}
 	
 

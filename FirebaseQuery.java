@@ -593,7 +593,7 @@ public class FirebaseQuery {
 		}
 		FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
 		DatabaseReference ref = myFirebase.getReference("Users");
-		ref.addListenerForSingleValueEvent(new ValueEventListener() {
+		ValueEventListener once = ref.addValueEventListener(new ValueEventListener() {
 			  @Override
 			public void onDataChange(DataSnapshot snapshot) {
 			    if (snapshot.hasChild(id)) {
@@ -612,6 +612,7 @@ public class FirebaseQuery {
 		
 		try {
 			semaphore.acquire();
+			ref.removeEventListener(once);
 			System.out.println("Semaphore acquired");
 			if(output.size() >= 1)
 				return output.get(0);
