@@ -599,6 +599,7 @@ public class FirebaseQuery {
 			    if (snapshot.hasChild(id)) {
 			      output.add(snapshot.child(id).getValue(User.class));
 			    }
+			    System.out.println("releasing sempahore");
 			    semaphore.release();
 			  }
 
@@ -611,6 +612,7 @@ public class FirebaseQuery {
 		
 		try {
 			semaphore.acquire();
+			System.out.println("Semaphore acquired");
 			if(output.size() >= 1)
 				return output.get(0);
 		}

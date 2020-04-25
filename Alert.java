@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Alert {
 
+	//TIMESTAMP
 	public String sender;
 	public List<String> recipients;
 	public String message;
@@ -34,8 +35,6 @@ public class Alert {
 				recipients.remove(i);
 			}
 		}
-		System.out.println(this.id);
-		System.out.println(this.recipients.toString());
 		if(recipients.size() == 0) {
 			FirebaseQuery.removeAlert(this);
 		}

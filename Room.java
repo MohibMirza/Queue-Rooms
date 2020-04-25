@@ -7,6 +7,7 @@ public class Room {
 
 	public LinkedList<String> mainQueue;
 	public String roomname;
+	public String location;
 	public String description;
 	public List<String> users;
 	public List<String> owner;
@@ -14,10 +15,11 @@ public class Room {
 	
 	
 	//CREATES ROOM AND PUBLISHES IT TO DATABASE
-	public Room(String newOwner, String theroomname, String thedescription) {
+	public Room(String newOwner, String theroomname, String thedescription, String thelocation) {
 		owner = new ArrayList<String>();
 		owner.add(newOwner);
 		roomname = theroomname;
+		location = thelocation;
 		description = thedescription;
 		mainQueue = new LinkedList<String>();
 		users = new ArrayList<String>();
@@ -153,20 +155,15 @@ public class Room {
 	}
 	
 	public static void main(String[] args) {
-		Room test = new Room("owner", "testroom", "description");
-		test.addUser("test1");
-		test.addUser("test1");
-		test.addQueue("first");
-		test.addQueue("second");
-		test.addQueue("third");
-		test.popQueue();
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Test");
+		Room.findRooms("test1");
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 }
