@@ -26,10 +26,38 @@
   <!-- Custom styles for this template-->
   <link href="zi/css/sb-admin-2.min.css" rel="stylesheet">
   
+  <script>
+  function addfriend()
+  {
+	  var friend_id = document.getElementById("friend_id").value;
+	  var dd="entered addfreind";
+	  console.log(dd);
+	  $.ajax({
+			url: "add_friend",
+			data: {
+				f_id: friend_id,
+				my_id: UserID_js 
+			},
+			success: function(result) {
+				var cc = 'Entered sucess'
+				console.log(cc);
+				$("html").empty();
+				console.log(result);
+			    $("html").append(result);  
+			    
+			}
+		});
+	    
+	  
+  }
+  </script> 
+  
   <script type="text/javascript"> 
   <%
   String UserID=(String)request.getAttribute("UserID");
+  String Username=(String)request.getAttribute("Username");
   String access_token=(String)request.getParameter("access_token");
+  String image_url="";
   fb_info_json client_info=null;
   fb_info obj_Client_details=null;
   String flag=null;
@@ -37,16 +65,18 @@
   String fb_email=(String)request.getAttribute("fb_email");
   String fb_id=(String)request.getAttribute("fb_id");		  
   String fb_pic_url=(String)request.getAttribute("fb_pic");	
-
+  List<String> User_f_list= new ArrayList<String>();
   String friend_name=(String)request.getAttribute("friend_name");
   
   if(UserID==null || UserID.equals(""))
   {
 	  UserID=fb_usr;
+	  Username=fb_usr;
+	  image_url=fb_pic_url;
   }
-  
-  List<String> User_f_list = User.getFriends(UserID);
-  
+  else{
+   User_f_list =  User.getFriends(UserID); //new  ArrayList<String>();
+  }
   
   if(friend_name==null)
   {
@@ -107,31 +137,7 @@ console.log(fb_pic_url);
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-<script>
-  function addfriend()
-  {
-	  var friend_id = document.getElementById("friend_id").value;
-	  var dd="entered addfreind";
-	  console.log(dd);
-	  $.ajax({
-			url: "add_friend",
-			data: {
-				f_id: friend_id,
-				my_id: UserID_js 
-			},
-			success: function(result) {
-				var cc = 'Entered sucess'
-				console.log(cc);
-				$("html").empty();
-				console.log(result);
-			    $("html").append(result);  
-			    
-			}
-		});
-	    
-	  
-  }
-  </script>
+
 
     <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -345,8 +351,8 @@ console.log(fb_pic_url);
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Tommy Trojan</span>
-                <img class="img-profile rounded-circle" src="zi/tommy.jpg">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= Username %></span>
+                <img class="img-profile rounded-circle" src=<%= image_url %>>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -636,7 +642,7 @@ console.log(fb_pic_url);
   <script src="zi/js/demo/chart-area-demo.js"></script>
   <script src="zi/js/demo/chart-pie-demo.js"></script>
   
-  
+ 
 
 </body>
 

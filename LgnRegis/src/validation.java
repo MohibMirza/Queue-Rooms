@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class validation {
 	
-	public static  String Login_check(String email,String pass)
+	public static  String[] Login_check(String email,String pass)
 	{
 		try {
 			String info="{\n" + 
@@ -80,7 +80,12 @@ public class validation {
 	        {
 	        	System.out.println("Sucess");
 	        	String temp = (String)userRecord.getUid();
-	        	return temp;
+	        	String temp2 = (String)userRecord.getDisplayName();
+	        	temp2=temp2.substring(0,temp2.indexOf("password=")-1);
+	        	String[] usrpass=  new String[2];
+	        	usrpass[0]=temp;
+	        	usrpass[1]=temp2;
+	        	return usrpass;
 	        }
 	        else
 	        {

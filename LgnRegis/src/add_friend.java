@@ -45,7 +45,7 @@ public class add_friend extends HttpServlet {
 		friend_name= friend_name.substring(0,friend_name.indexOf("password=")-1);
 		request.setAttribute("friend_name", friend_name);
 		
-		//User.addFriends(my_id, userid);
+		User.addFriends(my_id, userid);
 		System.out.println("Back in add_friend going to dispatch");
 		RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
         rs.forward(request, response);

@@ -102,11 +102,12 @@ public class Login extends HttpServlet {
 	     String login_email = request.getParameter("email_login");
 	     String login_pass = request.getParameter("password_login");
 	     
-	     String request_checker= validation.Login_check(login_email, login_pass);
+	     String[] request_checker= validation.Login_check(login_email, login_pass);
 	            
 	            if(request_checker!=null)
 	            {
-	            	request.setAttribute("UserID", request_checker);
+	            	request.setAttribute("UserID", request_checker[0]);
+	            	request.setAttribute("Username", request_checker[1]);
 	            	RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
 	                rs.forward(request, response);
 	            	
