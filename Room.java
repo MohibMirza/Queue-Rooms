@@ -14,7 +14,14 @@ public class Room {
 	public String id;
 	
 	
-	//CREATES ROOM AND PUBLISHES IT TO DATABASE
+	public Room() {
+		mainQueue = new LinkedList<String>();
+		users = new ArrayList<String>();
+		owner = new ArrayList<String>();
+	}
+	
+	
+	//CREATES ROOM AND PUBLISHES IT TO DATABASE 	 
 	public Room(String newOwner, String theroomname, String thedescription, String thelocation) {
 		owner = new ArrayList<String>();
 		owner.add(newOwner);
@@ -154,16 +161,16 @@ public class Room {
 		this.description = description;
 	}
 	
-	public static void main(String[] args) {
-		Room.findRooms("test1");
-	}
-
 	public String getLocation() {
 		return location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public static void main(String[] args) {
+		Room.findRooms("test1");
 	}
 	
 }

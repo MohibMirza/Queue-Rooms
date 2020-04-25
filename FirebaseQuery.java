@@ -401,7 +401,9 @@ public class FirebaseQuery {
 		ref.addChildEventListener(new ChildEventListener() {
 			  @Override
 			  public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+				System.out.println(dataSnapshot);
 			    Alert data = dataSnapshot.getValue(Alert.class);
+			    System.out.println(data);
 			    List<String> recipients = data.getRecipients();
 			    for(int i = 0; i < recipients.size(); i++) {
 			    	if(recipients.get(i).equals(userid)) {
@@ -628,10 +630,11 @@ public class FirebaseQuery {
 		try {
 			//setValueAsyncTest();
 			//readTest();
-			System.out.println("HERE " + queryUserID("4977").getUsername());
-			//addAlert();
+			Room test = new Room("owner", "testroom", "description", "earth");
+			test.addUser("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			List<Room> test2 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			Thread.sleep(5000);
-			System.out.println("Done");
+			System.out.println(test2.size());
 			
 		}
 		catch(Exception e) {

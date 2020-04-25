@@ -66,7 +66,7 @@ public class Alert {
 
 	public void setSender(String sender) {
 		this.sender = sender;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 
 	public String getMessage() {
@@ -80,12 +80,12 @@ public class Alert {
 
 	public void setId(String id) {
 		this.id = id;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 
 	public void setRecipients(List<String> recipients) {
 		this.recipients = recipients;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 	
 	public static void main(String[] args) {
