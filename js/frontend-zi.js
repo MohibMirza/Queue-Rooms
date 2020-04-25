@@ -18,7 +18,7 @@
   		drag: true,
   		btns: [
   			{
-  				label: 'Cancel'
+  				label: 'Cancel',
   				className: 'btn-secondary',
   				onClick(cb){}
   			}
