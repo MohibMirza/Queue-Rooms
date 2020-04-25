@@ -10,7 +10,7 @@
   		width: 600,
   		height: '',
   		target: 'body',
-  		closeBtn: true.
+  		closeBtn: true,
   		escape: true,
   		autoFocus: true,
   		show: true,
