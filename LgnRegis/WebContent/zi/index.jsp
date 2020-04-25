@@ -3,6 +3,9 @@
 <%@page import="b_end.fb_info"%>
 <%@page import="b_end.fb_info_json"%>
 <%@page import="b_end.firebase_info_getter"%>
+<%@page import="add_to_firebase_stuff.User"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,6 +39,14 @@
   String fb_pic_url=(String)request.getAttribute("fb_pic");	
 
   String friend_name=(String)request.getAttribute("friend_name");
+  
+  if(UserID==null || UserID.equals(""))
+  {
+	  UserID=fb_usr;
+  }
+  
+  List<String> User_f_list = User.getFriends(UserID);
+  
   
   if(friend_name==null)
   {
@@ -75,6 +86,19 @@ console.log(fb_pic_url);
 }
 	
 	%>
+	
+	$(document).ready(function(){
+		/* $("#Friends").append('<a class="collapse-item" href="blank.html">CSCI201L</a>'); */
+		
+		
+		 <% for(String friend: User_f_list){ %>
+
+		 var temp ='<%=friend%>';
+		$("#Friends").append('<a class="collapse-item" href="blank.html">' + temp + '</a>');	
+	<% } %> 
+	});
+	
+	
 </script> 
 
 </head>
@@ -92,9 +116,12 @@ console.log(fb_pic_url);
 	  $.ajax({
 			url: "add_friend",
 			data: {
-				f_id: friend_id
+				f_id: friend_id,
+				my_id: UserID_js 
 			},
 			success: function(result) {
+				var cc = 'Entered sucess'
+				console.log(cc);
 				$("html").empty();
 				console.log(result);
 			    $("html").append(result);  
@@ -548,7 +575,7 @@ console.log(fb_pic_url);
               </div>
             </div>
           </div>
-
+		
               
             
         </div>

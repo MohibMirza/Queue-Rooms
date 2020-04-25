@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import add_to_firebase_stuff.User;
 import b_end.firebase_info_getter;
 
 /**
@@ -33,6 +34,9 @@ public class add_friend extends HttpServlet {
 		// TODO Auto-generated method stub
 		String userid= request.getParameter("f_id");
 		
+		String my_id= request.getParameter("my_id");
+		
+		
 		String friend_name=firebase_info_getter.friend_getter(userid);
 		
 		
@@ -40,6 +44,9 @@ public class add_friend extends HttpServlet {
 		
 		friend_name= friend_name.substring(0,friend_name.indexOf("password=")-1);
 		request.setAttribute("friend_name", friend_name);
+		
+		//User.addFriends(my_id, userid);
+		System.out.println("Back in add_friend going to dispatch");
 		RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
         rs.forward(request, response);
 		

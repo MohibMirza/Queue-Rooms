@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import add_to_firebase_stuff.User;
+
 import java.sql.*;
 
 /**
@@ -141,8 +143,12 @@ public class java_bend extends HttpServlet {
     					userRecord = FirebaseAuth.getInstance().createUser(req);
     					System.out.println("Successfully created new user: " + userRecord.getUid());
     					out.println("You are sucessfully registered");
-    		            RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
-    		            rs.include(request, response);
+    		 
+    		            User.createUser(userid, (String)userRecord.getUid());
+    		            
+    		            request.setAttribute("UserID", (String)userRecord.getUid());
+    	            	RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
+    	                rs.forward(request, response);
     				} catch (FirebaseAuthException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
