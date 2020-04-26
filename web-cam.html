@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script> 
-  <title>SleepySAL - Video Capture </title>
+  <title>mySAL - Video Capture </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,9 +33,9 @@
           <!-- Sidebar - Brand -->
           <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
               <div class="sidebar-brand-icon rotate-n-15">
-                  <i class="fas fa-flushed"></i>
+                <i class="fas fa-flushed"></i>
               </div>
-              <div class="sidebar-brand-text mx-3">SleepySAL</div>
+              <div class="sidebar-brand-text mx-3">mySAL</div>
           </a>
 
           <!-- Divider -->
@@ -416,8 +416,8 @@
 
           <!-- Media Capture -->
           <div class="mediaBooth">
-            <p>Click inside the frame below to open your web cam. You should receive a permission check from your browser. We recommend using Google chrome.</p>
-            <video class="video" id="video" onclick="openWebCam();" autoplay></video>
+            <p>Click on the globe below to open your web cam. You should receive a permission check from your browser. We recommend using Google chrome.</p>
+            <video class="video" id="video" src="sample-video.mp4" onclick="openWebCam();" autoplay></video>
             <button href="#" id="capture" class="video-capture-button btn btn-primary" style="margin-bottom: 20px;">Take Photo</button>
             <button href="#" id="use-capture" class="use-capture btn btn-warning" style="margin-bottom: 20px; visibility: hidden;">Use this photo</button>
             <canvas id="canvas" width="400" height="300"></canvas>
@@ -431,7 +431,7 @@
                 canvas = document.getElementById("canvas"),
                 context = canvas.getContext("2d"),
                 vendorUrl = window.URL || widnow.webkitURL;
-                video.setAttribute('src', 'sample-video.mp4');
+                video.setAttribute('src', ''); // clear sample video
 
                 navigator.getMedia = navigator.mediaDevicesgetUserMedia ||
                          navigator.webkitGetUserMedia ||
@@ -441,8 +441,8 @@
                 navigator.getMedia({
                   video: true,
                   audio: false
-                }, function(stream){
-                  video.srcObject = stream;
+                }, function(stream){ // if get web cam successful
+                  video.srcObject = stream; // change video src to web cam
                   video.play();
                   
                 }, function(error){
