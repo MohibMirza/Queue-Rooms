@@ -141,9 +141,15 @@
               </div>
             </li>
 			
-			<%@page import="java.util.List,queuerooms2.Alert,queuerooms2.FirebaseQuery" %>
+			<%@page import="java.util.ArrayList,java.util.List,queuerooms2.Alert,queuerooms2.FirebaseQuery" %>
 			<%
-				List<Alert> alerts = query.queryAlerts(userID);
+				FirebaseQuery fq = new FirebaseQuery();
+                    		
+                    		
+                    		
+                fq.query(application.getRealPath("/"));
+                List<Alert> alerts = new ArrayList<Alert>();
+				//List<Alert> alerts = query.queryAlerts(userID);
 			%>
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
