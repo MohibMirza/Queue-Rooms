@@ -38,7 +38,6 @@
 <script
 	src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>
 
-
 </head>
 
 <body id="page-top">
@@ -190,7 +189,7 @@
 			<!-- Chat Box Script -->
 			<script>
 				// Your web app's Firebase configuration
-				var firebaseConfig = {
+				var _firebaseConfig = {
 				    apiKey: "AIzaSyDvbLAmCUFiA94jVoh24h3M2Zw1REi1QjM",
 				    authDomain: "cs201-project-c4168.firebaseapp.com",
 				    databaseURL: "https://cs201-project-c4168.firebaseio.com/",
@@ -201,37 +200,37 @@
 				    measurementId: "G-TRH6PVHYGW"
 				};
 				// Initialize Firebase
-				firebase.initializeApp(firebaseConfig);
+				firebase.initializeApp(_firebaseConfig);
 				
+				var _state = {
+					firechat: null,
+					currUser: null,
+					hasLoaded: false,
+					roomId: null
+				};
 				
-				
-				
-				var _firechat = null;
-				var _currUser = null;
 				function initChat(user) {
 					// Get a Firebase Database ref
 					var chatRef = firebase.database().ref("chat");
 
 					// Create a Firechat instance
 					var firechat = new Firechat(chatRef);
-					firechat.on("room-enter", roomEntered);
+					firechat.on("room-enter", onRoomEntered);
 					firechat.on("message-add", onReceiveMessage);
 					// Set the Firechat user
 					firechat.setUser(user.uid, user.displayName,
-							function(user) {
-								//firechat.resumeSession();
-								_currUser = user;
-							});
-					_firechat = firechat;
-					
-					/*
-					for() {
-						createOrEnterRoom("a");
-					}
-					*/
-					
-			        chatRef.child("users").child(user.uid).update({
-			        	photoUrl: user.photoURL
+						function(userRef) {
+							//firechat.resumeSession();
+							_state.currUser = userRef;
+							updateUserProfile(userRef, user.photoURL);
+						});
+					_state.firechat = firechat;
+				}
+				
+				function updateUserProfile(user, photoUrl) {
+					var chatRef = firebase.database().ref("chat/users/" + user.id);
+			        chatRef.update({
+			        	photoUrl: photoUrl
 			        }, function(error) {
 			            if (error) {
 			                alert("Failed: " + JSON.stringify(error));
@@ -239,36 +238,44 @@
 			                getUsers();
 			            }
 			        });
-					
-					
 				}
 				
-				
 				function onContactClicked(event) {
-					var li = event.target;
+					var li = event.currentTarget;
+					if(li.nodeName.toUpperCase() != "LI") {
+						alert("Unknown node clicked: " + li.outerHTML);
+						return;
+					}
+					
+					chatWithFriend(li.id);
+				}
+				
+				function chatWithFriend(friendId) {
 					var roomName;
-					if(li.id < _currUser.id) {
-						roomName = li.id + " " + _currUser.id;
+					if(friendId < _state.currUser.id) {
+						roomName = friendId + " " + _state.currUser.id;
 					}
 					else {
-						roomName = _currUser.id + " " + li.id;
+						roomName = _state.currUser.id + " " + friendId;
 					}
 					createOrEnterRoom(roomName);
 				}
 				
-				var hasLoaded = false;
-				
 				function getUsers() {
-			    	var chatRef = firebase.database().ref("chat");
-			        chatRef.child("users").on("value", function(snapshot) {
-			        	if(!hasLoaded) {
+			    	var chatRef = firebase.database().ref("chat/users");
+			        chatRef.on("value", function(snapshot) {
+			        	var firstFriendId = null;
+			        	if(!_state.hasLoaded) {
 				    		var div = document.getElementById("contactList");
 				        	for(var user in snapshot.val()) {
 				        		// filter for friends
 				        		
 				        	    var userInfo = snapshot.val()[user];
-				        	    if(_currUser.id == userInfo.id) {
+				        	    if(_state.currUser.id == userInfo.id) {
 				        	    	continue;
+				        	    }
+				        	    if (!firstFriendId) {
+				        	    	firstFriendId = userInfo.id;
 				        	    }
 								var li = document.createElement("li");
 								li.id = userInfo.id;
@@ -294,27 +301,28 @@
 								li.appendChild(divProfile);
 								li.appendChild(name);
 								div.appendChild(li);
-								
 				        	}
-				        	hasLoaded = true;
+				        	_state.hasLoaded = true;
+				        	
+				        	if (firstFriendId){
+				        		chatWithFriend(firstFriendId);
+				        	}
 			        	}
 			        });
 			    }	
-
-				var _roomId = null;
 				
-				function roomEntered(roomId) {
-					_roomId = roomId.id;
-					_firechat.getRoom(roomId.id, function(room) {
+				function onRoomEntered(roomId) {
+					_state.roomId = roomId.id;
+					_state.firechat.getRoom(roomId.id, function(room) {
 						try {
-							console.log("roomEntered: " + room.name);
+							console.log("onRoomEntered: " + room.name);
 							var roomName = room.name;
 							var ids = roomName.split(" ");
 							var friendId;
-							if(ids[0] == _currUser.id) {
+							if(ids[0] == _state.currUser.id) {
 								friendId = ids[1];
 							}
-							else if (ids[1] == _currUser.id) {
+							else if (ids[1] == _state.currUser.id) {
 								friendId = ids[0];
 							}
 							else {
@@ -334,22 +342,22 @@
 
 				function sendTest(message) {
 					// TODO: dynamic roomId generation
-					_firechat.sendMessage(_roomId, message,
+					_state.firechat.sendMessage(_state.roomId, message,
 							messageType = 'default', function(foo) {
 						
 							});
 				}
 				
+				function cleanRoom() {
+					if (_state.roomId){
+						document.getElementById("chatLog").innerHTML = "";
+						_state.firechat.leaveRoom(_state.roomId);
+						_state.roomId = null;
+					}
+				}
 				
 				function createOrEnterRoom(roomName) {
-					document.getElementById("chatLog").innerHTML = "";
-					console.log("done1");
-					if (_roomId){
-						_firechat.leaveRoom(_roomId);
-						_roomId = null;
-					}
-					
-					_firechat.getRoomList(function(roomList) {
+					_state.firechat.getRoomList(function(roomList) {
 						var roomId = null;
 						for(var id in roomList) {
 							var g = roomList[id];
@@ -360,14 +368,23 @@
 							}
 						}						
 						
+						if (_state.roomId) {
+							if (roomId == _state.roomId) {
+								console.log("Room unchanged: " + roomId);
+								return;
+							}
+							else {
+								cleanRoom();
+							}
+						}
+							
 						if(!roomId) {
-							_firechat.createRoom(roomName, "public", function(roomId) {
-								// _roomId = roomId;
+							_state.firechat.createRoom(roomName, "public", function(roomId) {
 							});
 						}
 						else {
 							console.log("Entering room: " + roomId);
-							_firechat.enterRoom(roomId);
+							_state.firechat.enterRoom(roomId);
 						}
 					});
 					
@@ -375,7 +392,7 @@
 				
 				
 				function onReceiveMessage(roomId, message) {
-					if(message.userId == _currUser.id) {
+					if(message.userId == _state.currUser.id) {
 						displayMyMessage(message);
 					}
 					else {
@@ -420,7 +437,6 @@
 			        });
 				}
 				
-				
 				function login() {
 			        // Log the user in via Google
 			        var provider = new firebase.auth.GoogleAuthProvider();
@@ -450,7 +466,7 @@
 				});
 				*/
 
-				//_firechat.resumeSession();
+				//_state.firechat.resumeSession();
 
 				/* listen for "Enter" key press when chat box open */
 				$("#messageToSend").keypress(function(event) {
