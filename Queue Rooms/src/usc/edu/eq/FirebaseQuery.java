@@ -446,7 +446,6 @@ public class FirebaseQuery {
 		
 		String key = PATH;
 		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
-		final Semaphore semaphore = new Semaphore(0);
 		FileInputStream serviceAccount = null;
 		Vector<Room> output = new Vector<Room>();
 		try {
@@ -476,7 +475,6 @@ public class FirebaseQuery {
 						output.add(data);
 					}
 				}
-				semaphore.release();
 			  }
 
 			@Override
@@ -505,12 +503,6 @@ public class FirebaseQuery {
 
 			});
 		
-		try {
-			semaphore.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return output;
 	}
 	
