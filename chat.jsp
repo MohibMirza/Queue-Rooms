@@ -133,28 +133,14 @@
 								placeholder="Search contact" aria-label="Search">
 						</div>
 						<!-- Dynamic List of contacts -->
-						<script></script>
+						<div id="contactList"></div>
+						<!--  
 						<li class="chatListRow row d-flex flex-row align">
 							<div class="chatListProfile">
 								<img class="chatListProfilePicture rounded-circle" src=timmy.png>
 							</div> <text class="chatListName">Timmy</text>
 						</li>
-						<li class="chatListRow row d-flex flex-row align">
-							<div class="chatListProfile">
-								<img class="chatListProfilePicture rounded-circle" src=timmy.png>
-							</div> <text class="chatListName">Timmy</text>
-						</li>
-						<li class="chatListRow row d-flex flex-row align">
-							<div class="chatListProfile">
-								<img class="chatListProfilePicture rounded-circle" src=timmy.png>
-							</div> <text class="chatListName">Timmy</text>
-						</li>
-						<li class="chatListRow row d-flex flex-row align">
-							<div class="chatListProfile">
-								<img class="chatListProfilePicture rounded-circle" src=timmy.png>
-							</div> <text class="chatListName">Timmy</text>
-						</li>
-
+						-->
 					</div>
 
 
@@ -163,15 +149,13 @@
 			<!-- Message Area (right-hand-side) -->
 			<div class="col2">
 				<!-- Header: showing current chat recipient name -->
-				<div class="chatBoxHeader row">
+				<div class="chatBoxHeader row" id="chatHead">
 					<custom name="chatHeaderRecipient"
-						class="chatHeaderRecipient font-weight-bold">insert name</custom>
+						class="chatHeaderRecipient font-weight-bold" id="chatHeaderRecipient">:name:</custom>
 					<div class="closeChatBoxButton">
 						<i class="fa fa-times" style="z-index: 1"
 							onclick="closeChatBox();"></i>
 					</div>
-
-
 				</div>
 				<!-- Dynamic Chat Log Box -->
 				<ul id="chatLog" class="chatLog list-group">
@@ -195,8 +179,6 @@
 				<!-- Buttons -->
 				<div class="chatSendArea row align-items-center">
 					<button class="btn col font-weight-bold">Invite</button>
-					<button onclick="sendTestMessage();"
-						class="btn col font-weight-bold">Test</button>
 					<button
 						class="fas fa-laugh btn font-weight-bold chatInputEmojiButton"></button>
 					<button id="sendButton" class="btn col font-weight-bold"
@@ -221,35 +203,98 @@
 				firebase.initializeApp(firebaseConfig);
 				
 				
-				firebase.auth().onAuthStateChanged(function(user) {
-			        // Once authenticated, instantiate Firechat with the logged in user
-			        if (user) {
-			          initChat(user);
-			        }
-		        });
+				
 				
 				var _firechat = null;
-				var currUser = null;
+				var _currUser = null;
 				function initChat(user) {
 					// Get a Firebase Database ref
 					var chatRef = firebase.database().ref("chat");
 
 					// Create a Firechat instance
 					var firechat = new Firechat(chatRef);
-					// var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
 					firechat.on("room-enter", roomEntered);
 					firechat.on("message-add", onReceiveMessage);
 					// Set the Firechat user
 					firechat.setUser(user.uid, user.displayName,
 							function(user) {
 								//firechat.resumeSession();
-								currUser = user;
+								_currUser = user;
 							});
 					_firechat = firechat;
 					
+					/*
+					for() {
+						createOrEnterRoom("a");
+					}
+					*/
 					
-					createOrEnterRoom("a");
+			        chatRef.child("users").child(user.uid).update({
+			        	photoUrl: user.photoURL
+			        }, function(error) {
+			            if (error) {
+			                alert("Failed: " + JSON.stringify(error));
+			            } else {
+			                getUsers();
+			            }
+			        });
+					
+					
 				}
+				
+				
+				function onContactClicked(event) {
+					var li = event.target;
+					var roomName;
+					if(li.id < _currUser.id) {
+						roomName = li.id + " " + _currUser.id;
+					}
+					else {
+						roomName = _currUser.id + " " + li.id;
+					}
+					createOrEnterRoom(roomName);
+					var friendName = li.innerText;
+					document.getElementById("chatHeaderRecipient").innerText = friendName;
+				}
+				
+				
+				
+				function getUsers() {
+			    	var chatRef = firebase.database().ref("chat");
+			        chatRef.child("users").on("value", function(snapshot) {
+			    		alert("Got User: " + JSON.stringify(snapshot.val()));
+			    		var div = document.getElementById("contactList");
+			        	for(var user in snapshot.val()) {
+			        	    var userInfo = snapshot.val()[user];
+
+							var li = document.createElement("li");
+							li.id = userInfo.id;
+							li.className = "chatListRow row d-flex flex-row align";
+							li.onclick = onContactClicked;
+							var divProfile = document.createElement("div");
+							divProfile.className = "chatListProfile";
+							var img = document.createElement("img");
+							img.className = "chatListProfilePicture rounded-circle";
+							img.width = "20";
+							if(userInfo.photoUrl)
+							{							
+								img.src = userInfo.photoUrl;
+							}
+							else {
+								img.src = "timmy.png";
+							}
+							
+							var name = document.createTextNode(userInfo.name);
+							name.className = "chatListName";
+							
+							divProfile.appendChild(img);
+							li.appendChild(divProfile);
+							li.appendChild(name);
+							div.appendChild(li);
+							
+			        	}
+			        });
+			    }	
 
 				var _roomId = null;
 				function roomEntered(roomId) {
@@ -306,6 +351,7 @@
 				}
 				
 				function displayOtherMessage(message) {
+					var otherUser = message.userId;
 					receivedMsg = "<li class='chatLogRow row d-flex flex-row'>"+
 					  " <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div>"+
 					  " <div class='senderMessage'><text>" + 
@@ -318,9 +364,16 @@
 				function login() {
 			        // Log the user in via Twitter
 			        var provider = new firebase.auth.GoogleAuthProvider();
-			        firebase.auth().signInWithPopup(provider).catch(function(error) {
+			        firebase.auth().signInWithPopup(provider).then(function(result) {
+				        // Once authenticated, instantiate Firechat with the logged in user
+				        if (result.user) {
+				          initChat(result.user);
+				        }
+			        }).catch(function(error) {
 			          console.log("Error authenticating user:", error);
 			        });
+			        
+			       // firebase.auth().onAuthStateChanged();
 			    }
 				
 				login();
@@ -372,12 +425,14 @@
 					document.getElementById("chatBox").style.visibility = "hidden";
 					document.getElementById("chatButton").style.visibility = "visible";
 				}
+				/*
 				function sendTestMessage() {
 					var msgString = "This is a test message.";
 					sendTest(msgString);
 					var testMsg = "<li class='chatLogRow row d-flex flex-row'> <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div> <div class='senderMessage'><text>This is a test message.</text></div></li>"
 					document.getElementById("chatLog").innerHTML += testMsg;
 				}
+				*/
 				function addSampleContact(user) {
 					var list = $('#chatList')[0];
 
