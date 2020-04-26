@@ -36,13 +36,18 @@
 			url: "add_friend",
 			data: {
 				f_id: friend_id,
-				my_id: UserID_js 
+				my_id: UserID_js,
+				normal_login: "1",
+				UserID: UserID_js,
+				Username: "<%=(String)request.getAttribute("Username")%>"
+				
 			},
 			success: function(result) {
 				var cc = 'Entered sucess'
 				console.log(cc);
 				$("html").empty();
 				console.log(result);
+				location.reload(true);
 			    $("html").append(result);  
 			    
 			}
@@ -56,6 +61,13 @@
   <%
   String UserID=(String)request.getAttribute("UserID");
   String Username=(String)request.getAttribute("Username");
+  
+  if(UserID==null || UserID.equals(""))
+  {
+	  UserID= (String)session.getAttribute("UserID");
+	  Username = (String)session.getAttribute("Username");
+  }
+  
   String access_token=(String)request.getParameter("access_token");
   String image_url="";
   fb_info_json client_info=null;
@@ -68,7 +80,9 @@
   List<String> User_f_list= new ArrayList<String>();
   String friend_name=(String)request.getAttribute("friend_name");
   
-  if(UserID==null || UserID.equals(""))
+  String normal_login=(String)request.getAttribute("normal_login");
+  
+  if(normal_login==null || normal_login.equals(""))
   {
 	  UserID=fb_usr;
 	  Username=fb_usr;
@@ -76,6 +90,8 @@
   }
   else{
    User_f_list =  User.getFriends(UserID); //new  ArrayList<String>();
+   session.setAttribute("UserID", UserID);
+   session.setAttribute("Username", Username);
   }
   
   if(friend_name==null)
@@ -86,10 +102,6 @@
    %>
 var new_friend='<%=friend_name%>';
 	
-$(document).ready(function(){
-	
-
-	});
 
 
 var UserID_js = "<%=UserID %>" ;
@@ -121,9 +133,11 @@ console.log(fb_pic_url);
 		/* $("#Friends").append('<a class="collapse-item" href="blank.html">CSCI201L</a>'); */
 		
 		
-		 <% for(String friend: User_f_list){ %>
+		 <% for(String friend: User_f_list){ 
+		 	String friend_username= User.getUser(friend); 
+		 %>
 
-		 var temp ='<%=friend%>';
+		 var temp ='<%=friend_username%>';
 		$("#Friends").append('<a class="collapse-item" href="blank.html">' + temp + '</a>');	
 	<% } %> 
 	});
@@ -174,7 +188,7 @@ console.log(fb_pic_url);
                   <div class="bg-white py-2 collapse-inner rounded" id="Friends">
                       <h6 class="collapse-header">My Friends:</h6>
                       <a class="collapse-item" href="blank.html">Timmy Nook</a>
-                      <a class="collapse-item" href="blank.html"><%=friend_name%></a>
+                       <%-- <a class="collapse-item" href="blank.html"><%=friend_name%></a> --%>
                   </div>
               </div>
           </li>

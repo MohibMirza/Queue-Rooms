@@ -44,6 +44,8 @@ public class add_friend extends HttpServlet {
 		
 		friend_name= friend_name.substring(0,friend_name.indexOf("password=")-1);
 		request.setAttribute("friend_name", friend_name);
+		request.setAttribute("Username", (String)request.getParameter("Username"));
+		request.setAttribute("UserID", my_id);
 		
 		User.addFriends(my_id, userid);
 		System.out.println("Back in add_friend going to dispatch");

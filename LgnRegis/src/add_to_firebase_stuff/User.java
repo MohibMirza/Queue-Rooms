@@ -32,9 +32,15 @@ public class User {
 	
 	public static void addFriends(String thisid, String targetid) {
 		User currentuser = FirebaseQuery.queryUserID(thisid);
-		User friend = FirebaseQuery.queryUserID(targetid);
+		//User friend = FirebaseQuery.queryUserID(targetid);
 		
-		currentuser.addFriend(friend.username);
+		currentuser.addFriend(targetid);
+	}
+	
+	public static String getUser(String thisid) {
+		User currentuser = FirebaseQuery.queryUserID(thisid);
+		
+		return currentuser.username;
 	}
 	
 	public static User findUserID(String id) {
