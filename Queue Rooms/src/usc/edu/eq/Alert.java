@@ -93,15 +93,15 @@ public class Alert {
 	
 	public static void main(String[] args) {
 		List<String> myrecipients = new ArrayList<String>();
-		myrecipients.add("2102");
-		myrecipients.add("1477");
-		myrecipients.add("3854");
-		Alert test = new Alert("2286", myrecipients, "test message");
+		myrecipients.add("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+		Alert test = new Alert("2286", myrecipients, "genisis");
 		try {
-			List<Alert> test2 = Alert.findAlerts("2102");
-			Thread.sleep(10000);
-			System.out.println("HERE: " + test2.toString());
-			System.out.println(test2.get(0).getId());
+			List<Alert> test2 = Alert.findAlerts("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			Thread.sleep(5000);
+			System.out.println("HERE: " + test2.size());
+			for(Alert one: test2) {
+				System.out.println(one.getId());
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

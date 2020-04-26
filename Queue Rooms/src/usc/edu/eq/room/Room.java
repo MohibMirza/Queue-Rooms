@@ -1,12 +1,9 @@
 package usc.edu.eq.room;
+import usc.edu.eq.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
-
-import usc.edu.eq.FirebaseQuery;
-import usc.edu.eq.User;
-
 import java.util.List;
 
 public class Room {
@@ -18,6 +15,7 @@ public class Room {
 	public List<String> users;
 	public List<String> owner;
 	public String id;
+	public String messageBoard;
 	
 	
 	public Room() {
@@ -36,9 +34,14 @@ public class Room {
 		description = thedescription;
 		mainQueue = new LinkedList<String>();
 		users = new ArrayList<String>();
+		messageBoard = new RoomMessageBoard().getId();
 		id = UUID.randomUUID().toString();
 		
 		FirebaseQuery.updateRoom(this);
+	}
+	
+	public static Room findRoomID(String id) {
+		return FirebaseQuery.queryRoomID(id);
 	}
 	
 	//FINDS ALL ROOMS CORRESPONDING TO A PERSON
@@ -107,6 +110,12 @@ public class Room {
 		FirebaseQuery.updateRoom(this);
 	}
 	
+	public static void addQueue(String newUser, String roomid) {
+		Room find = FirebaseQuery.queryRoomID(roomid);
+		find.mainQueue.add(newUser);
+		FirebaseQuery.updateRoom(find);
+	}
+	
 	//POPS QUEUE
 	public User popQueue() {
 		if(!mainQueue.isEmpty()) {
@@ -116,6 +125,7 @@ public class Room {
 		}
 		return null;
 	}
+	
 
 	public List<String> getUsers() {
 		return users;
@@ -176,5 +186,16 @@ public class Room {
 	public static void main(String[] args) {
 		Room.findRooms("test1");
 	}
+
+
+	public String getMessageBoard() {
+		return messageBoard;
+	}
+
+
+	public void setMessageBoard(String messageBoard) {
+		this.messageBoard = messageBoard;
+	}
 	
 }
+
