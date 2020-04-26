@@ -393,6 +393,9 @@
 				
 				function displayOtherMessage(message) {
 					var otherUser = message.userId;
+			    	var chatRef = firebase.database().ref("chat/users/" + userId);
+			        chatRef.on("value", function(snapshot) {
+			        }
 					receivedMsg = "<li class='chatLogRow row d-flex flex-row'>"+
 					  " <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div>"+
 					  " <div class='senderMessage'><text>" + 
