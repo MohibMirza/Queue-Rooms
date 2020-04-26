@@ -1,8 +1,15 @@
+<%@page import="b_end.fb_info"%>
+<%@page import="b_end.fb_info_json"%>
+<%@page import="b_end.firebase_info_getter"%>
+<%@page import="add_to_firebase_stuff.User"%>
+<%@page import="add_to_firebase_stuff.Room"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,6 +17,137 @@
   <meta name="author" content="">
 
   <title>SB Admin 2 - Dashboard</title>
+  
+  
+  <script>
+  
+  function addfriend()
+  {
+	  var friend_id = document.getElementById("friend_id").value;
+	  var dd="entered addfreind";
+	  console.log(dd);
+	  $.ajax({
+			url: "add_friend",
+			data: {
+				f_id: friend_id,
+				my_id: UserID_js,
+				normal_login: "1",
+				UserID: UserID_js,
+				Username: "<%=(String)request.getAttribute("Username")%>"
+				
+			},
+			success: function(result) {
+				var cc = 'Entered sucess'
+				console.log(cc);
+				$("html").empty();
+				console.log(result);
+				location.reload(true);
+			    //$("html").append(result);  
+			    
+			}
+		});
+	    
+	  
+  }
+  </script> 
+  
+ <script type="text/javascript"> 
+  <%
+  String UserID=(String)request.getAttribute("UserID");
+  String Username=(String)request.getAttribute("Username");
+  String normal_login="";
+  if(UserID==null || UserID.equals(""))
+  {
+	  UserID= (String)session.getAttribute("UserID");
+	  Username = (String)session.getAttribute("Username");
+	  normal_login= (String)session.getAttribute("normal_login");
+  }
+  else
+  {
+	  System.out.println("In the else block!");
+	  session.setAttribute("UserID", UserID);
+	  session.setAttribute("Username", Username);
+	  session.setAttribute("normal_login", "1");
+  }
+  
+  String access_token=(String)request.getParameter("access_token");
+  String image_url="https://d17fnq9dkz9hgj.cloudfront.net/uploads/2018/04/Golden-Retriever-puppy_01.jpg";
+  fb_info_json client_info=null;
+  fb_info obj_Client_details=null;
+  String flag=null;
+  String fb_usr=(String)request.getAttribute("fb_name");
+  String fb_email=(String)request.getAttribute("fb_email");
+  String fb_id=(String)request.getAttribute("fb_id");		  
+  String fb_pic_url=(String)request.getAttribute("fb_pic");	
+  String is_fb=(String)request.getAttribute("is_fb");	
+  List<String> User_f_list= new ArrayList<String>();
+  String friend_name=(String)request.getAttribute("friend_name");
+  
+  if(normal_login.equals("") || normal_login==null)
+  	normal_login=(String)request.getAttribute("normal_login");
+  
+  if(normal_login==null || normal_login.equals("") || is_fb!=null)
+  {
+	  UserID=fb_usr;
+	  Username=fb_usr;
+	  image_url=fb_pic_url;
+  }
+  else{
+   User_f_list =  User.getFriends(UserID); //new  ArrayList<String>();
+   session.setAttribute("UserID", UserID);
+   session.setAttribute("Username", Username);
+  }
+  
+  if(friend_name==null)
+  {
+	  friend_name="";
+  }
+  
+   %>
+var new_friend='<%=friend_name%>';
+	
+
+
+var UserID_js = "<%=UserID %>" ;
+var test="<%=access_token %>";
+if(!(UserID_js=="null"))
+{console.log(UserID_js);
+ console.log(test);	
+}
+else{
+ UserID_js="<%=fb_usr %>";
+var fb_emailid="<%=fb_email %>";
+var fb_Uid="<%=fb_id %>"; 
+var fb_pic_url="<%=fb_pic_url %>";
+
+console.log(UserID_js);
+console.log(fb_emailid);
+console.log(fb_Uid);
+console.log(fb_pic_url);
+}
+
+<% if(UserID==null || UserID.equals(""))
+{
+	UserID=fb_id;
+}
+	
+	%>
+	
+	$(document).ready(function(){
+		/* $("#Friends").append('<a class="collapse-item" href="blank.html">CSCI201L</a>'); */
+		
+		
+		 <% for(String friend: User_f_list){ 
+		 	String friend_username= User.getUser(friend); 
+		 %>
+
+		 var temp ='<%=friend_username%>';
+		$("#Friends").append('<a class="collapse-item" href="blank.html">' + temp + '</a>');	
+	<% } %> 
+	});
+	
+	
+</script> 
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,7 +181,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="homepage.jsp?UserID=<%=UserID%>&Username=<%=Username%>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Home</span></a>
       </li>
@@ -84,9 +222,10 @@
           <i class="fas fa-laugh-wink"></i>
           <span>Friends</span>
         </a>
+
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
+          <div class="bg-white py-2 collapse-inner rounded" id="Friends">
+            <h6 class="collapse-header">My Friends:</h6>
             <a class="collapse-item" href="utilities-color.html">Colors</a>
             <a class="collapse-item" href="utilities-border.html">Borders</a>
             <a class="collapse-item" href="utilities-animation.html">Animations</a>
@@ -97,7 +236,7 @@
 
       <!-- Log Out -->
       <li class="nav-item">
-        <a class="nav-link" href="login.html">
+        <a class="nav-link" href="index.jsp">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Log Out</span></a>
       </li>
@@ -389,8 +528,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Tommy Trojan</span>
-                <img class="img-profile rounded-circle" src="tommy.jpg">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= Username %></span>
+                <img class="img-profile rounded-circle" src=<%= image_url %>>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -411,6 +550,10 @@
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
+                <div class="dropdown-divider"></div>
+                <i class="dropdown-item" href="#" data-toggle="modal">
+                  User ID: <%=UserID %>
+                </i>
               </div>
             </li>
 
@@ -427,6 +570,16 @@
                 <h1 class="h3 mb-0 text-gray-800">Quick Access</h1>
             </div>
 
+			<div class="d-sm-flex align-items-center justify-content-between mb-2">
+                <h1 class="h3 mb-0 text-gray-800">Add Friends!</h1>
+                <div class="input-group mb-3">
+  					<input type="text" class="form-control" placeholder="Enter a UserID" id="friend_id">
+  					<div class="input-group-append">
+    				<button class="btn btn-success" onclick="addfriend()">Add</button>
+  				</div>
+				</div>
+            </div>
+			
             <!-- Content Row -->
             <div class="row">
 
@@ -651,7 +804,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="index.jsp">Logout</a>
         </div>
       </div>
     </div>

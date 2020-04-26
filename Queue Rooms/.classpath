@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/OpenJDK 13.0.1 [13.0.1]">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 13.0.1 [13.0.1]">
 		<attributes>
 			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
@@ -14,7 +14,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="firebase-shade-0.0.1-SNAPSHOT (1).jar"/>
+	<classpathentry kind="lib" path="/Users/nandhakumarsaravana/Downloads/Queue-Rooms-master/Queue Rooms/WebContent/lib/firebase-shade-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="slf4j-jdk14-1.7.30.jar"/>
+	<classpathentry kind="lib" path="/Users/nandhakumarsaravana/Downloads/Queue-Rooms-master/Queue Rooms/WebContent/WEB-INF/lib/javax.servlet-3.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
