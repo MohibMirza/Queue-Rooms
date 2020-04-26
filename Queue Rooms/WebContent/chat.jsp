@@ -393,15 +393,31 @@
 				
 				function displayOtherMessage(message) {
 					var otherUser = message.userId;
-			    	var chatRef = firebase.database().ref("chat/users/" + userId);
+			    	var chatRef = firebase.database().ref("chat/users/" + otherUser);
 			        chatRef.on("value", function(snapshot) {
-			        }
-					receivedMsg = "<li class='chatLogRow row d-flex flex-row'>"+
-					  " <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div>"+
-					  " <div class='senderMessage'><text>" + 
-					  message.message + 
-					  "</text></div></li>";
-					document.getElementById("chatLog").innerHTML += receivedMsg;
+			        	var userInfo = snapshot.val();
+			        	var li = document.createElement("li");
+			        	li.className = "chatLogRow row d-flex flex-row";
+			        	var profileDiv = document.createElement("div");
+			        	profileDiv.className = "senderProfile";
+			        	li.appendChild(profileDiv);
+			        	var img = document.createElement("img");
+			        	img.className = "senderProfilePicture rounded-circle";
+			        	if (userInfo.photoUrl) {
+			        		img.src = userInfo.photoUrl;
+			        	}
+			        	else {
+			        		img.src = "timmy.png";
+			        	}
+			        	profileDiv.appendChild(img);
+			        	var messageDiv = document.createElement("div");
+			        	messageDiv.className = "senderMessage";
+			        	li.appendChild(messageDiv);
+			        	var messageText = document.createElement("text");
+			        	messageText.innerText = message.message;
+			        	messageDiv.appendChild(messageText);
+						document.getElementById("chatLog").appendChild(li);
+			        });
 				}
 				
 				
