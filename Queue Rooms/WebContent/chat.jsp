@@ -330,7 +330,7 @@
 								return;
 							}
 							var li = document.getElementById(friendId);
-							var friendName = li.innerText;
+							var friendName = li.textContent;
 							document.getElementById("chatHeaderRecipient").innerText = friendName;
 						}
 						catch (exception) {
