@@ -1,10 +1,10 @@
-package usc.edu.eq;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Alert {
 
+	//TIMESTAMP
 	public String sender;
 	public List<String> recipients;
 	public String message;
@@ -12,6 +12,7 @@ public class Alert {
 	
 	//CREATE AN ALERT AND SEND IT TO THE DATABASE
 	public Alert() {
+		recipients = new ArrayList<String>();
 	}
 	
 	public Alert(String thesender, List<String> therecipients, String themessage) {
@@ -35,8 +36,6 @@ public class Alert {
 				recipients.remove(i);
 			}
 		}
-		System.out.println(this.id);
-		System.out.println(this.recipients.toString());
 		if(recipients.size() == 0) {
 			FirebaseQuery.removeAlert(this);
 		}
@@ -68,7 +67,7 @@ public class Alert {
 
 	public void setSender(String sender) {
 		this.sender = sender;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 
 	public String getMessage() {
@@ -82,29 +81,29 @@ public class Alert {
 
 	public void setId(String id) {
 		this.id = id;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 
 	public void setRecipients(List<String> recipients) {
 		this.recipients = recipients;
-		FirebaseQuery.updateAlert(this);
+		//FirebaseQuery.updateAlert(this);
 	}
 	
-//	public static void main(String[] args) {
-//		List<String> myrecipients = new ArrayList<String>();
-//		myrecipients.add("2102");
-//		myrecipients.add("1477");
-//		myrecipients.add("3854");
-//		Alert test = new Alert("2286", myrecipients, "test message");
-//		try {
-//			List<Alert> test2 = Alert.findAlerts("2102");
-//			Thread.sleep(10000);
-//			System.out.println("HERE: " + test2.toString());
-//			System.out.println(test2.get(0).getId());
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public static void main(String[] args) {
+		List<String> myrecipients = new ArrayList<String>();
+		myrecipients.add("2102");
+		myrecipients.add("1477");
+		myrecipients.add("3854");
+		Alert test = new Alert("2286", myrecipients, "test message");
+		try {
+			List<Alert> test2 = Alert.findAlerts("2102");
+			Thread.sleep(10000);
+			System.out.println("HERE: " + test2.toString());
+			System.out.println(test2.get(0).getId());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

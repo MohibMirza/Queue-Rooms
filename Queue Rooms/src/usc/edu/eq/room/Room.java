@@ -1,12 +1,6 @@
-package usc.edu.eq.room;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
-
-import usc.edu.eq.FirebaseQuery;
-import usc.edu.eq.User;
-
 import java.util.List;
 
 public class Room {

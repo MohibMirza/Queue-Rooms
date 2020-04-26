@@ -1,30 +1,35 @@
-package usc.edu.eq;
 import java.util.ArrayList;
 import java.util.List;
-
-import usc.edu.eq.room.Room;
+import java.util.Map;
 
 public class User {
 	
 	public String userid;
 	public String username;
+	public String picurl;
 	public List<String> friends;
 	
 	public User() {
-		friends= new ArrayList<String>();
+		friends = new ArrayList<String>();
 	}
 	
-	public User(String theusername, String theuserid) {
+	public User(String theusername, String theuserid, String thepicurl) {
 		userid = theuserid;
+		picurl = thepicurl;
 		username = theusername;
 		friends = new ArrayList<String>();
 		FirebaseQuery.updateUser(this);
 	}
 	
-	//STATIC CREATE A USER AND SEND TO DATABASE
-	public static void createUser(String theusername, String theuserid) {
-		User a = new User(theusername, theuserid);
+	//STATIC FUNCTIONS
+	public static void createUser(String theusername, String theuserid, String thepicurl) {
+		User a = new User(theusername, theuserid, thepicurl);
 		return;
+	}
+	
+	public static List<Room> findRooms(String userID) {
+		return FirebaseQuery.queryRooms(userID);
+
 	}
 	
 	public static List<String> getFriends(String userid) {
@@ -34,15 +39,14 @@ public class User {
 	
 	public static void addFriends(String thisid, String targetid) {
 		User currentuser = FirebaseQuery.queryUserID(thisid);
-		User friend = FirebaseQuery.queryUserID(targetid);
-		
-		currentuser.addFriend(friend.username);
+		currentuser.addFriend(targetid);
 	}
 	
 	public static User findUserID(String id) {
 		return FirebaseQuery.queryUserID(id);
 	}
 	
+	//HERE ENDS THE STATIC FUNCTIONS
 	//DO NOT USE, LET ME KNOW IF YOU WANT TO SO I CAN FIX IT
 	public static User findUserName(String name) {
 		return FirebaseQuery.queryUserName(name);
@@ -58,14 +62,6 @@ public class User {
 			friends.add(friend.get(i));
 		}
 		FirebaseQuery.updateUser(this);
-	}
-	
-	public void joinRoom() { // ADDS USER TO ROOM'S INTERNAL USER LIST IN FIREB
-		Room room = null; // BUILD A QUERY FOR A ROOM BASED ON ID
-	}
-	
-	public void deleteRoom() { // DELETES USER FROM ROOM'S INTERNAL USER LIST IN FIREB
-		
 	}
 	
 	public String getUserid() {
@@ -96,15 +92,14 @@ public class User {
 	public void setFriends(List<String> friends) {
 		this.friends = friends;
 	}
-//	public static void main(String[] args) {
-//        User.createUser("bruh1", "42069");
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        System.out.println("Done");
-//    }
+
+	public String getPicurl() {
+		return picurl;
+	}
+
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+	
 
 }

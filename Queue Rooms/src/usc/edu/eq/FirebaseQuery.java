@@ -1,5 +1,3 @@
-package usc.edu.eq;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,11 +28,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import usc.edu.eq.room.Room;
-
 public class FirebaseQuery {
 	
-	final public static String PATH = "./serviceAccount.json";
+	final public static String PATH = "C:\\Users\\Andrew Zhou\\Downloads\\cs201-project-c4168-firebase-adminsdk-qfw6t-ea581bc0e3.json";
 	
 	public static void setValueTest() {
 		System.out.println("test");
@@ -450,6 +446,7 @@ public class FirebaseQuery {
 		
 		String key = PATH;
 		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
+		final Semaphore semaphore = new Semaphore(0);
 		FileInputStream serviceAccount = null;
 		Vector<Room> output = new Vector<Room>();
 		try {
@@ -479,6 +476,7 @@ public class FirebaseQuery {
 						output.add(data);
 					}
 				}
+				semaphore.release();
 			  }
 
 			@Override
@@ -507,6 +505,12 @@ public class FirebaseQuery {
 
 			});
 		
+		try {
+			semaphore.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return output;
 	}
 	
@@ -541,6 +545,7 @@ public class FirebaseQuery {
 			    if(data.getUsername().equals(name)){
 					output.add(data);
 				}
+			    System.out.println("Releasing semaphore");
 			    semaphore.release();
 			  }
 
@@ -571,6 +576,7 @@ public class FirebaseQuery {
 			});
 		try {
 			semaphore.acquire();
+			System.out.println("Acquired Semaphore");
 			return output.get(0);
 		}
 		catch(Exception e) {
@@ -634,11 +640,14 @@ public class FirebaseQuery {
 		try {
 			//setValueAsyncTest();
 			//readTest();
-			Room test = new Room("ThisIsATest", "testroom", "description", "USC");
+			Room test = new Room("owner", "testroom", "description", "earth");
 			test.addUser("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			List<Room> test2 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			List<Room> test3 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			Thread.sleep(5000);
 			System.out.println(test2.size());
+			System.out.println(test3.size());
+			System.out.println("Done");
 			
 		}
 		catch(Exception e) {
