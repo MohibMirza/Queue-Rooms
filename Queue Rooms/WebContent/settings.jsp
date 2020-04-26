@@ -31,7 +31,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-flushed"></i>
           </div>
@@ -43,7 +43,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="index.jsp">
               <i class="fas fa-fw fa-home"></i>
               <span>Home</span>
           </a>
@@ -61,22 +61,22 @@
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Favorites:</h6>
-                  <a class="collapse-item" href="blank.html">Timmy Nook</a>
-                  <a class="collapse-item" href="blank.html">Tommy Nook</a>
+                  <a class="collapse-item" href="blank.jsp">Timmy Nook</a>
+                  <a class="collapse-item" href="blank.jsp">Tommy Nook</a>
               </div>
           </div>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="rui-rooms.html">
+        <a class="nav-link" href="rui-rooms.jsp">
           <i class="fas fa-fw fa-table"></i>
           <span>Rooms</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="settings.html">
+        <a class="nav-link" href="settings.jsp">
           <i class="fas fa-fw fa-cog"></i>
           <span>Settings</span></a>
       </li>
@@ -293,7 +293,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">using your web cam</div>
                             </div>
                             <div class="col-auto">
-                              <a href="web-cam.html" class="btn btn-primary">Go</a>
+                              <a href="web-cam.jsp" class="btn btn-primary">Go</a>
                             </div>
                             
                         </div>
@@ -311,7 +311,7 @@
                               <div class="h5 mb-0 font-weight-bold text-gray-800">using an online image</div>
                           </div>
                           <div class="col-auto">
-                            <a href="screenshot.html" class="btn btn-success">Go</a>
+                            <a href="screenshot.jsp" class="btn btn-success">Go</a>
                           </div>
                           
                       </div>
@@ -358,7 +358,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="login.jsp">Logout</a>
         </div>
       </div>
     </div>
