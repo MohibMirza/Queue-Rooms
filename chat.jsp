@@ -158,8 +158,9 @@
 				</div>
 				<!-- Dynamic Chat Log Box -->
 				<ul id="chatLog" class="chatLog list-group">
+					<!-- 
 					<li class="chatLogRow row d-flex flex-row">
-						<!-- 
+						
 						<div class="senderProfile">
 							<img class="senderProfilePicture rounded-circle" src=timmy.png>
 						</div>
@@ -169,8 +170,9 @@
 							If anyone knows how to have the profile picture align with the
 							top of this paragraph please change the code.</text>
 						</div>
-						-->
+						
 					</li>
+					-->
 				</ul>
 				<!-- Chat Message Input Box -->
 				<textarea class="chatInputBox" id="messageToSend"
@@ -252,57 +254,87 @@
 						roomName = _currUser.id + " " + li.id;
 					}
 					createOrEnterRoom(roomName);
-					var friendName = li.innerText;
-					document.getElementById("chatHeaderRecipient").innerText = friendName;
 				}
 				
-				
+				var hasLoaded = false;
 				
 				function getUsers() {
 			    	var chatRef = firebase.database().ref("chat");
 			        chatRef.child("users").on("value", function(snapshot) {
-			    		var div = document.getElementById("contactList");
-			        	for(var user in snapshot.val()) {
-			        		// filter for friends
-			        	    var userInfo = snapshot.val()[user];
-
-							var li = document.createElement("li");
-							li.id = userInfo.id;
-							li.className = "chatListRow row d-flex flex-row align";
-							li.onclick = onContactClicked;
-							var divProfile = document.createElement("div");
-							divProfile.className = "chatListProfile";
-							var img = document.createElement("img");
-							img.className = "chatListProfilePicture rounded-circle";
-							img.width = "20";
-							if(userInfo.photoUrl)
-							{							
-								img.src = userInfo.photoUrl;
-							}
-							else {
-								img.src = "timmy.png";
-							}
-							
-							var name = document.createTextNode(userInfo.name);
-							name.className = "chatListName";
-							
-							divProfile.appendChild(img);
-							li.appendChild(divProfile);
-							li.appendChild(name);
-							div.appendChild(li);
-							
+			        	if(!hasLoaded) {
+				    		var div = document.getElementById("contactList");
+				        	for(var user in snapshot.val()) {
+				        		// filter for friends
+				        		
+				        	    var userInfo = snapshot.val()[user];
+				        	    if(_currUser.id == userInfo.id) {
+				        	    	continue;
+				        	    }
+								var li = document.createElement("li");
+								li.id = userInfo.id;
+								li.className = "chatListRow row d-flex flex-row align";
+								li.onclick = onContactClicked;
+								var divProfile = document.createElement("div");
+								divProfile.className = "chatListProfile";
+								var img = document.createElement("img");
+								img.className = "chatListProfilePicture rounded-circle";
+								img.width = "20";
+								if(userInfo.photoUrl)
+								{							
+									img.src = userInfo.photoUrl;
+								}
+								else {
+									img.src = "timmy.png";
+								}
+								
+								var name = document.createTextNode(userInfo.name);
+								name.className = "chatListName";
+								
+								divProfile.appendChild(img);
+								li.appendChild(divProfile);
+								li.appendChild(name);
+								div.appendChild(li);
+								
+				        	}
+				        	hasLoaded = true;
 			        	}
 			        });
 			    }	
 
 				var _roomId = null;
+				
 				function roomEntered(roomId) {
-					_roomId = roomId;
+					_roomId = roomId.id;
+					_firechat.getRoom(roomId.id, function(room) {
+						try {
+							console.log("roomEntered: " + room.name);
+							var roomName = room.name;
+							var ids = roomName.split(" ");
+							var friendId;
+							if(ids[0] == _currUser.id) {
+								friendId = ids[1];
+							}
+							else if (ids[1] == _currUser.id) {
+								friendId = ids[0];
+							}
+							else {
+								alert("Something went wrong!\n " + roomName);
+								return;
+							}
+							var li = document.getElementById(friendId);
+							var friendName = li.innerText;
+							document.getElementById("chatHeaderRecipient").innerText = friendName;
+						}
+						catch (exception) {
+							console.error("room enter exception", e.stack);
+						}
+					});
+					
 				}
 
 				function sendTest(message) {
 					// TODO: dynamic roomId generation
-					_firechat.sendMessage("-M5drYtHbAR39CmDgt7M", message,
+					_firechat.sendMessage(_roomId, message,
 							messageType = 'default', function(foo) {
 						
 							});
@@ -310,21 +342,32 @@
 				
 				
 				function createOrEnterRoom(roomName) {
+					document.getElementById("chatLog").innerHTML = "";
+					console.log("done1");
+					if (_roomId){
+						_firechat.leaveRoom(_roomId);
+						_roomId = null;
+					}
+					
 					_firechat.getRoomList(function(roomList) {
+						var roomId = null;
 						for(var id in roomList) {
 							var g = roomList[id];
 							if (g.name == roomName) {
-								_roomId = id;
+								roomId = id;
+								found = true;
 								break;
 							}
-						}
-						if(!_roomId) {
+						}						
+						
+						if(!roomId) {
 							_firechat.createRoom(roomName, "public", function(roomId) {
-								_roomId = roomId;
+								// _roomId = roomId;
 							});
 						}
 						else {
-							_firechat.enterRoom(_roomId);	
+							console.log("Entering room: " + roomId);
+							_firechat.enterRoom(roomId);
 						}
 					});
 					
@@ -332,7 +375,7 @@
 				
 				
 				function onReceiveMessage(roomId, message) {
-					if(message.userId == currUser.id) {
+					if(message.userId == _currUser.id) {
 						displayMyMessage(message);
 					}
 					else {
@@ -408,7 +451,7 @@
 					if (msg != "") {
 						sendTest(msg);
 
-						displayMyMessage(msg);
+						//displayMyMessage(msg);
 
 						document.getElementById("messageToSend").value = '';
 						document.getElementById("chatLog").scrollTop = document
