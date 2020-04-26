@@ -620,6 +620,59 @@ public class FirebaseQuery {
 		
 	}
 	
+	
+	public static Room queryRoomID(String id) {
+		String key = PATH;
+		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
+		List<Room> output = new ArrayList<Room>();
+		final Semaphore semaphore = new Semaphore(0);
+		FileInputStream serviceAccount = null;
+		try {
+			serviceAccount = new FileInputStream(key);
+			FirebaseOptions options = new FirebaseOptions.Builder()
+					  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+					  .setDatabaseUrl(databaseURL)
+					  .build();
+
+			FirebaseApp.initializeApp(options);
+			
+		}
+		catch(Exception e) {
+			//e.printStackTrace();
+		}
+		FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
+		DatabaseReference ref = myFirebase.getReference("Rooms");
+		ValueEventListener once = ref.addValueEventListener(new ValueEventListener() {
+			  @Override
+			public void onDataChange(DataSnapshot snapshot) {
+			    if (snapshot.hasChild(id)) {
+			      output.add(snapshot.child(id).getValue(Room.class));
+			    }
+			    System.out.println("releasing sempahore");
+			    semaphore.release();
+			  }
+
+			@Override
+			public void onCancelled(DatabaseError arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			});
+		
+		try {
+			semaphore.acquire();
+			ref.removeEventListener(once);
+			System.out.println("Semaphore acquired");
+			if(output.size() >= 1)
+				return output.get(0);
+		}
+		catch(Exception e) {
+		}
+		
+		return null;
+		
+	}
+	
 	public static void main(String args[]) {
 		try {
 			//setValueAsyncTest();

@@ -35,6 +35,10 @@ public class Room {
 		FirebaseQuery.updateRoom(this);
 	}
 	
+	public static Room findRoomID(String id) {
+		return FirebaseQuery.queryRoomID(id);
+	}
+	
 	//FINDS ALL ROOMS CORRESPONDING TO A PERSON
 	public static List<Room> findRooms(String userid) {
 		return FirebaseQuery.queryRooms(userid);
