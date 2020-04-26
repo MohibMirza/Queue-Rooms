@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script> 
-  <title>mySAL - Screen capture </title>
+  <title>mySAL - Screenshot </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@
           <!-- Sidebar - Brand -->
           <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
               <div class="sidebar-brand-icon rotate-n-15">
-                  <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-flushed"></i>
               </div>
               <div class="sidebar-brand-text mx-3">mySAL</div>
           </a>
@@ -72,13 +72,6 @@
             <a class="nav-link" href="rui-rooms.html">
               <i class="fas fa-fw fa-table"></i>
               <span>Rooms</span></a>
-          </li>
-
-          <!-- Nav Item - Tables -->
-          <li class="nav-item">
-            <a class="nav-link" href="chat.html">
-              <i class="fas fa-fw fa-comment"></i>
-              <span>Chat</span></a>
           </li>
 
           <!-- Nav Item - Tables -->
@@ -410,17 +403,23 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Screen capture</h1>
+            <h1 class="h3 mb-0 text-gray-800">Change your profile picture </h1>
             <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
           </div>
           <div class="screenshot-container">
-            <label for="screenshot-url">Enter a url below, for example, "www.google.com".</label>
-            <input type="text" class="form-control" id="screenshot-url" style="margin-bottom: 20px;" value="www.google.com">
+            <label for="screenshot-url">Enter the url of the image you want to use. An example is show below with its url.</label>
+            <input type="text" class="form-control" id="screenshot-url" style="margin-bottom: 20px;" placeholder="Your url here.">
             <button class="btn btn-primary" onclick="takeScreenshot();">Take Screenshot</button>
-            <p id="screenshot-responseText">ajax response here</p>
+            <p id="screenshot-responseText"> https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fanimalcrossing&psig=AOvVaw0SNuxoOP2rW1LXy-RMJM7j&ust=1587959628151000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLjzg-GYhekCFQAAAAAdAAAAABAD</p>
           </div>
           
-          <img id="screenshot-result" src="tommy.jpg" style="margin-top: 10px">
+          <img id="screenshot-result" src="nook.jpg" style="margin-top: 10px">
+          
+          <div class="screenshot-container">
+            <button id="use-photo-button" class="btn btn-success" onclick="useScreenshot();" style="margin-top: 10px; visibility: hidden;">Use This Photo</button>
+          </div>
+
+          
           
 
         </div>
@@ -433,9 +432,13 @@
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function(){
-                    if(this.readyState == 4 && this.status == 200){
+                    if(this.readyState == 4 && this.status == 200){ // if screenshot successful, validated by servlet
                         document.getElementById("screenshot-result").innerHTML = this.responseURL;
                         document.getElementById("screenshot-responseText").src = this.responseText;
+                        document.getElementById("use-photo-button").style.visibility = "visible";
+                    }
+                    else{ //if screenshot unsuccessful, return an error message
+                      document.getElementById("sscreenshot-responseText").innerHTML = "Cannot load image. Please try again, or use another url.";
                     }
                 }
                 xhttp.open("GET", getURL, true);
