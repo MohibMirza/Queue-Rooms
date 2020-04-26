@@ -4,7 +4,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
@@ -190,14 +189,14 @@
 			<script>
 				// Your web app's Firebase configuration
 				var firebaseConfig = {
-					apiKey : "AIzaSyDCm3yLjNFmA_irCAmk54tQVmr8lhf1PJc",
-					authDomain : "mytest1-ab6ae.firebaseapp.com",
-					databaseURL : "https://mytest1-ab6ae.firebaseio.com",
-					projectId : "mytest1-ab6ae",
-					storageBucket : "mytest1-ab6ae.appspot.com",
-					messagingSenderId : "628828202676",
-					appId : "1:628828202676:web:df9ba38e55cfa4a60719e1",
-					measurementId : "G-9XPWPJPJW0"
+				    apiKey: "AIzaSyDvbLAmCUFiA94jVoh24h3M2Zw1REi1QjM",
+				    authDomain: "cs201-project-c4168.firebaseapp.com",
+				    databaseURL: "https://cs201-project-c4168.firebaseio.com/",
+				    projectId: "cs201-project-c4168",
+				    storageBucket: "cs201-project-c4168.appspot.com",
+				    messagingSenderId: "747247541467",
+				    appId: "1:747247541467:web:5efdb1140dca08111ec0fe",
+				    measurementId: "G-TRH6PVHYGW"
 				};
 				// Initialize Firebase
 				firebase.initializeApp(firebaseConfig);
@@ -262,9 +261,9 @@
 				function getUsers() {
 			    	var chatRef = firebase.database().ref("chat");
 			        chatRef.child("users").on("value", function(snapshot) {
-			    		alert("Got User: " + JSON.stringify(snapshot.val()));
 			    		var div = document.getElementById("contactList");
 			        	for(var user in snapshot.val()) {
+			        		// filter for friends
 			        	    var userInfo = snapshot.val()[user];
 
 							var li = document.createElement("li");
@@ -316,7 +315,6 @@
 							var g = roomList[id];
 							if (g.name == roomName) {
 								_roomId = id;
-								alert("nice1 " + g.id + " " + g.name);
 								break;
 							}
 						}
@@ -362,7 +360,7 @@
 				
 				
 				function login() {
-			        // Log the user in via Twitter
+			        // Log the user in via Google
 			        var provider = new firebase.auth.GoogleAuthProvider();
 			        firebase.auth().signInWithPopup(provider).then(function(result) {
 				        // Once authenticated, instantiate Firechat with the logged in user
@@ -377,11 +375,21 @@
 			    }
 				
 				login();
+				
+				
+				/*
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						initChat(user);
+						// User is signed in.
+					} else {
+						// No user is signed in.
+					}
+				});
+				*/
+
 				//_firechat.resumeSession();
-				
-				
-				
-				
+
 				/* listen for "Enter" key press when chat box open */
 				$("#messageToSend").keypress(function(event) {
 					if (event.keyCode === 13) {
@@ -399,9 +407,9 @@
 					var msg = document.getElementById("messageToSend").value;
 					if (msg != "") {
 						sendTest(msg);
-						
+
 						displayMyMessage(msg);
-						
+
 						document.getElementById("messageToSend").value = '';
 						document.getElementById("chatLog").scrollTop = document
 								.getElementById("chatLog").scrollHeight;
@@ -410,13 +418,11 @@
 						document.getElementById("messageToSend").placeholder = "Cannot send empty message! :("
 					}
 				}
-				
+
 				function displayMessages() {
-					
+
 				}
-				
-				
-				
+
 				function openChatBox() {
 					document.getElementById("chatBox").style.visibility = "visible";
 					document.getElementById("chatButton").style.visibility = "hidden";
@@ -432,7 +438,7 @@
 					var testMsg = "<li class='chatLogRow row d-flex flex-row'> <div class='senderProfile'> <img class='senderProfilePicture rounded-circle' src=timmy.png> </div> <div class='senderMessage'><text>This is a test message.</text></div></li>"
 					document.getElementById("chatLog").innerHTML += testMsg;
 				}
-				*/
+				 */
 				function addSampleContact(user) {
 					var list = $('#chatList')[0];
 
