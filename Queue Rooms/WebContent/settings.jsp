@@ -69,7 +69,7 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="rui-rooms.jsp">
+        <a class="nav-link" href="rooms.jsp">
           <i class="fas fa-fw fa-table"></i>
           <span>Rooms</span></a>
       </li>

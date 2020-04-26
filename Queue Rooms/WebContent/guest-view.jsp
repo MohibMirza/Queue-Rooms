@@ -31,7 +31,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-flushed"></i>
         </div>
@@ -43,25 +43,25 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="guest-view.html">
+        <a class="nav-link" href="guest-view.jsp">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Guest Home</span></a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="register.html">
+        <a class="nav-link" href="register.jsp">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Register on MySal</span></a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="login.html">
+        <a class="nav-link" href="login.jsp">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Login to MySal</span></a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="forgot-password.html">
+        <a class="nav-link" href="forgot-password.jsp">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Forgot Password?</span></a>
       </li>
@@ -84,9 +84,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
             
-            <a class="collapse-item" href="register.html">Register on MySal</a>
-            <a class="collapse-item" href="login.html">Login to MySal</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password?</a>
+            <a class="collapse-item" href="register.jsp">Register on MySal</a>
+            <a class="collapse-item" href="login.jsp">Login to MySal</a>
+            <a class="collapse-item" href="forgot-password.jsp">Forgot Password?</a>
           </div>
         </div>
       </li>
@@ -260,7 +260,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="login.jsp">Logout</a>
         </div>
       </div>
     </div>
