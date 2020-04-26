@@ -40,6 +40,16 @@ public class Room {
 		FirebaseQuery.updateRoom(this);
 	}
 	
+	public static boolean isOwner(String roomid, String userid) {
+		Room find = FirebaseQuery.queryRoomID(roomid);
+		for(String owner: find.getOwner()) {
+			if(userid.equals(owner)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static Room findRoomID(String id) {
 		return FirebaseQuery.queryRoomID(id);
 	}
