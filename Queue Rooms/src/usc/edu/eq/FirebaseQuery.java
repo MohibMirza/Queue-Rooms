@@ -381,6 +381,7 @@ public class FirebaseQuery {
 		String key = PATH;
 		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
 		Vector<Alert> output = new Vector<Alert>();
+		Semaphore semaphore = new Semaphore(0);
 		FileInputStream serviceAccount = null;
 		try {
 			serviceAccount = new FileInputStream(key);
@@ -398,46 +399,40 @@ public class FirebaseQuery {
 		FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
 		DatabaseReference ref = myFirebase.getReference("Alerts");
 
-		ref.addChildEventListener(new ChildEventListener() {
-			  @Override
-			  public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-				System.out.println(dataSnapshot);
-			    Alert data = dataSnapshot.getValue(Alert.class);
-			    System.out.println(data);
-			    List<String> recipients = data.getRecipients();
-			    for(int i = 0; i < recipients.size(); i++) {
-			    	if(recipients.get(i).equals(userid)) {
-			    		output.add(data);
-			    	}
-			    }
-			  }
+		ValueEventListener pls =  ref.addValueEventListener(new ValueEventListener() {
 
 			@Override
-			public void onCancelled(DatabaseError arg0) {
+			public void onCancelled(DatabaseError snapshot) {
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
-			public void onChildChanged(DataSnapshot arg0, String arg1) {
+			public void onDataChange(DataSnapshot snapshot) {
 				// TODO Auto-generated method stub
-				
+				System.out.println(snapshot.getRef());
+				for(DataSnapshot child: snapshot.getChildren()) {
+					Alert data = child.getValue(Alert.class);
+				    List<String> users = data.getRecipients();
+					for(int i = 0; i < users.size(); i++){
+						if(users.get(i).equals(userid)){
+							output.add(data);
+						}
+					}
+				}
+				System.out.println("Releasing Semaphores");
+				semaphore.release();
 			}
 
-			@Override
-			public void onChildMoved(DataSnapshot arg0, String arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onChildRemoved(DataSnapshot arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			  // ...
 			});
+		
+		try {
+			semaphore.acquire();
+			ref.removeEventListener(pls);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return output;
 	}
 	
@@ -446,6 +441,7 @@ public class FirebaseQuery {
 		
 		String key = PATH;
 		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
+		final Semaphore semaphore = new Semaphore(0);
 		FileInputStream serviceAccount = null;
 		Vector<Room> output = new Vector<Room>();
 		try {
@@ -464,45 +460,41 @@ public class FirebaseQuery {
 		
 		FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
 		DatabaseReference ref = myFirebase.getReference("Rooms");
-		
-		ref.addChildEventListener(new ChildEventListener() {
-			  @Override
-			  public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-			    Room data = dataSnapshot.getValue(Room.class);
-			    List<String> users = data.getUsers();
-				for(int i = 0; i < users.size(); i++){
-					if(users.get(i).equals(userid)){
-						output.add(data);
+
+		ValueEventListener pls =  ref.addValueEventListener(new ValueEventListener() {
+
+			@Override
+			public void onCancelled(DatabaseError snapshot) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onDataChange(DataSnapshot snapshot) {
+				// TODO Auto-generated method stub
+				System.out.println(snapshot.getRef());
+				for(DataSnapshot child: snapshot.getChildren()) {
+					Room data = child.getValue(Room.class);
+				    List<String> users = data.getUsers();
+					for(int i = 0; i < users.size(); i++){
+						if(users.get(i).equals(userid)){
+							output.add(data);
+						}
 					}
 				}
-			  }
-
-			@Override
-			public void onCancelled(DatabaseError arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onChildChanged(DataSnapshot arg0, String arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onChildMoved(DataSnapshot arg0, String arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onChildRemoved(DataSnapshot arg0) {
-				// TODO Auto-generated method stub
-				
+				System.out.println("Releasing Semaphores");
+				semaphore.release();
 			}
 
 			});
 		
+		try {
+			semaphore.acquire();
+			ref.removeEventListener(pls);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return output;
 	}
 	
@@ -530,7 +522,7 @@ public class FirebaseQuery {
 		DatabaseReference ref = myFirebase.getReference("Users");
 		
 		
-		ref.addChildEventListener(new ChildEventListener() {
+		ChildEventListener test = ref.addChildEventListener(new ChildEventListener() {
 			  @Override
 			  public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
 			    User data = dataSnapshot.getValue(User.class);
@@ -632,8 +624,8 @@ public class FirebaseQuery {
 		try {
 			//setValueAsyncTest();
 			//readTest();
-			Room test = new Room("owner", "testroom", "description", "earth");
-			test.addUser("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			//Room test = new Room("owner", "testroom", "description", "earth");
+			//test.addUser("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			List<Room> test2 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			List<Room> test3 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
 			Thread.sleep(5000);
