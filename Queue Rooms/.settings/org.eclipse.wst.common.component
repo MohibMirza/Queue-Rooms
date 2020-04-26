@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Queue Rooms">
+        
+    <wb-module deploy-name="SleepySAL">
+                
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+                
         <property name="context-root" value="Queue_Rooms"/>
-        <property name="java-output-path" value="/Queue Rooms/build/classes"/>
+                
+        <property name="java-output-path" value="/SleepySAL/build/classes"/>
+            
     </wb-module>
+    
 </project-modules>
