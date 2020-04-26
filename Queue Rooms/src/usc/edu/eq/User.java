@@ -1,6 +1,10 @@
+package usc.edu.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import usc.edu.eq.room.Room;
 
 public class User {
 	

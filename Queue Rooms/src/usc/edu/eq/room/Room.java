@@ -1,6 +1,12 @@
+package usc.edu.eq.room;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
+
+import usc.edu.eq.FirebaseQuery;
+import usc.edu.eq.User;
+
 import java.util.List;
 
 public class Room {
@@ -33,10 +39,6 @@ public class Room {
 		id = UUID.randomUUID().toString();
 		
 		FirebaseQuery.updateRoom(this);
-	}
-	
-	public static Room findRoomID(String id) {
-		return FirebaseQuery.queryRoomID(id);
 	}
 	
 	//FINDS ALL ROOMS CORRESPONDING TO A PERSON
@@ -114,8 +116,6 @@ public class Room {
 		}
 		return null;
 	}
-	
-	
 
 	public List<String> getUsers() {
 		return users;

@@ -1,3 +1,5 @@
+package usc.edu.eq;
+
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;

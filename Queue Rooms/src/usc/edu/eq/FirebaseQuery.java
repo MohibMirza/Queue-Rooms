@@ -1,9 +1,12 @@
+package usc.edu.eq;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -28,9 +31,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import usc.edu.eq.room.Room;
+
 public class FirebaseQuery {
 	
-	final public static String PATH = "C:\\Users\\Andrew Zhou\\Downloads\\cs201-project-c4168-firebase-adminsdk-qfw6t-ea581bc0e3.json";
+	final public static String PATH = "./serviceAccount.json";
 	
 	public static void setValueTest() {
 		System.out.println("test");
@@ -376,6 +381,12 @@ public class FirebaseQuery {
 		ref.updateChildrenAsync(update);
 	}
 	
+//	public static void addQueue(String newUser, String roomid) {
+//		Room find = FirebaseQuery.queryRoomID(roomid);
+//		find.mainQueue.add(newUser);
+//		FirebaseQuery.updateRoom(find);
+//	}
+
 	public static Vector<Alert> queryAlerts(String userid){
 		
 		String key = PATH;
@@ -620,7 +631,6 @@ public class FirebaseQuery {
 		
 	}
 	
-	
 	public static Room queryRoomID(String id) {
 		String key = PATH;
 		String databaseURL = "https://cs201-project-c4168.firebaseio.com";
@@ -635,7 +645,7 @@ public class FirebaseQuery {
 					  .build();
 
 			FirebaseApp.initializeApp(options);
-			
+
 		}
 		catch(Exception e) {
 			//e.printStackTrace();
@@ -655,10 +665,10 @@ public class FirebaseQuery {
 			@Override
 			public void onCancelled(DatabaseError arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			});
-		
+
 		try {
 			semaphore.acquire();
 			ref.removeEventListener(once);
@@ -668,10 +678,11 @@ public class FirebaseQuery {
 		}
 		catch(Exception e) {
 		}
-		
+
 		return null;
-		
+
 	}
+
 	
 	public static void main(String args[]) {
 		try {
@@ -679,17 +690,27 @@ public class FirebaseQuery {
 			//readTest();
 			//Room test = new Room("owner", "testroom", "description", "earth");
 			//test.addUser("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
-			List<Room> test2 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
-			List<Room> test3 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
-			Thread.sleep(5000);
-			System.out.println(test2.size());
-			System.out.println(test3.size());
-			System.out.println("Done");
+			// List<Room> test2 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			// List<Room> test3 = Room.findRooms("I9dH5BF59AfcO5SPtZHCy2VhAwA3");
+			// Thread.sleep(5000);
+			// System.out.println(test2.size());
+			// System.out.println(test3.size());
+			// System.out.println("Done");
+			Room room = queryRoomID("ac2ac6e8-6158-4de0-94d6-1d3263d0a631");
+			System.out.println(room.getLocation());
 			
-		}
-		catch(Exception e) {
+			LinkedList<String> queueMembers = room.getMainQueue();
+			System.out.println(queueMembers.size());
+			room.addQueue("NOT-A-REAL-ID");
+			System.out.println(queueMembers.size());
+			
+			LinkedList<String> queueMembers2 = room.getMainQueue();
+			System.out.println(queueMembers2.size());
+			
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
 	}
 	
 }
