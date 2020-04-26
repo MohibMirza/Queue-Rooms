@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>mySAL - Home</title>
+  <title>SB Admin 2 - Dashboard</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -17,6 +17,7 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
   <!-- custom.css includes styling for the chat box -->
   <link href="css/custom.css" rel="stylesheet"> 
 </head>
@@ -26,70 +27,90 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-
     <!-- Sidebar -->
-      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-          <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-              <div class="sidebar-brand-icon rotate-n-15">
-                  <i class="fas fa-laugh-wink"></i>
-              </div>
-              <div class="sidebar-brand-text mx-3">mySAL</div>
-          </a>
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">MySAL</div>
+      </a>
 
-          <!-- Divider -->
-          <hr class="sidebar-divider my-0">
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
-          <!-- Nav Item - Dashboard -->
-          <li class="nav-item active">
-              <a class="nav-link" href="index.html">
-                  <i class="fas fa-fw fa-home"></i>
-                  <span>Home</span>
-              </a>
-          </li>
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Home</span></a>
+      </li>
 
-          <!-- Divider -->
-          <hr class="sidebar-divider">
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-          <!-- Nav Item - Pages Collapse Menu -->
-          <li class="nav-item">
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                  <i class="fas fa-fw fa-user"></i>
-                  <span>Friends</span>
-              </a>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                      <h6 class="collapse-header">Favorites:</h6>
-                      <a class="collapse-item" href="blank.html">Timmy Nook</a>
-                      <a class="collapse-item" href="blank.html">Tommy Nook</a>
-                  </div>
-              </div>
-          </li>
+      <!-- Heading -->
+      <!-- <div class="sidebar-heading">
+        Interface
+      </div> -->
 
-          <!-- Nav Item - Tables -->
-          <li class="nav-item">
-            <a class="nav-link" href="rui-rooms.html">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Rooms</span></a>
-          </li>
+            <!-- Log Out -->
+      <li class="nav-item">
+        <a class="nav-link" href="alert-center.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Alert Center</span></a>
+      </li>
 
-          <!-- Nav Item - Tables -->
-          <li class="nav-item">
-            <a class="nav-link" href="settings.html">
-              <i class="fas fa-fw fa-cog"></i>
-              <span>Settings</span></a>
-          </li>
-
-          <!-- Divider -->
-          <hr class="sidebar-divider d-none d-md-block">
-
-          <!-- Sidebar Toggler (Sidebar) -->
-          <div class="text-center d-none d-md-inline">
-              <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Components:</h6>
+            <a class="collapse-item" href="change-password.html">Change password</a>
+            <a class="collapse-item" href="cards.html">Cards</a>
           </div>
+        </div>
+      </li>
 
-      </ul>
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-laugh-wink"></i>
+          <span>Friends</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Utilities:</h6>
+            <a class="collapse-item" href="utilities-color.html">Colors</a>
+            <a class="collapse-item" href="utilities-border.html">Borders</a>
+            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+            <a class="collapse-item" href="utilities-other.html">Other</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Log Out -->
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Log Out</span></a>
+      </li>
+
+            <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -97,7 +118,6 @@
 
       <!-- Main Content -->
       <div id="content">
-
         <!-- START OF CHAT BOX CODES -->
         <!-- Chat Box Open Button (float on top of everything)-->
         <button onclick="openChatBox();"id="chatButton" class="btn btn-primary chatButton">Chat</button>
@@ -225,7 +245,6 @@
           }
         </script>
         <!-- END OF CHAT BOX CODES -->
-
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -234,6 +253,9 @@
             <i class="fa fa-bars"></i>
           </button>
 
+
+          <!-- Topbar Search -->
+ 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -583,12 +605,12 @@
               </div>
             </div>
           </div>
-
               
             
         </div>
 
        
+
 
         </div>
         <!-- /.container-fluid -->
@@ -596,7 +618,15 @@
       </div>
       <!-- End of Main Content -->
 
-    
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
     </div>
     <!-- End of Content Wrapper -->
 
