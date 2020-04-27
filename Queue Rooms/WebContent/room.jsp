@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -207,7 +209,7 @@
                   </div>
                   <div class="font-weight-bold">
                     <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler Â· 58m</div>
+                    <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -217,7 +219,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun Â· 1d</div>
+                    <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -227,7 +229,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
+                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -237,7 +239,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog Â· 2w</div>
+                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -363,8 +365,10 @@
 
             <div class="col-lg-6 mb-4">
 			
-			  <canvas id = "drawCanvas" <!--width = "800" height = "600"--> style="border:1px solid #000000;"></canvas>
-			
+			  <canvas id = "drawCanvas" width = "800" height = "400" style="border:1px solid #000000;"></canvas> <!--width = "800" height = "600"-->
+			  <button onclick="stopErase();">Draw</button>
+			  <button onclick="startErase();">Erase</button>
+			  
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Message Board</h6>
@@ -374,21 +378,21 @@
 
                     <div class="font-weight-bold">
                       <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                      <div class="small text-gray-500">Emily Fowler Â· 18m</div>
+                      <div class="small text-gray-500">Emily Fowler · 18m</div>
                     </div>
 
                     <br>
 
                     <div class="font-weight-bold">
                       <div class="text-truncate">Where is everyone sitting?</div>
-                      <div class="small text-gray-500">CP Tommy Â· 20m</div>
+                      <div class="small text-gray-500">CP Tommy · 20m</div>
                     </div>
 
                     <br>
 
                     <div class="font-weight-bold">
                       <div class="text-truncate">Make sure to check Piazza for tips!</div>
-                      <div class="small text-gray-500">CP Tommy Â· 32m</div>
+                      <div class="small text-gray-500">CP Tommy · 32m</div>
                     </div>
 
 
@@ -436,7 +440,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">Ã—</span>
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -455,7 +459,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Join Queue Successful!</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">Ã—</span>
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">If you want to cancel your position, click the "Quit" button next to the queue</div>
@@ -473,7 +477,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Confirm quiting queue</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">Ã—</span>
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">If you leave the queue now, your position will be lost and you will have to join again from the end of the queue.</div>
@@ -496,7 +500,10 @@
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Custom script from frontend-zi-->
-  <script src="frontend-zi.js"></script>
+  <script src="js/frontend-zi.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 
 <script type="text/javascript">
@@ -514,7 +521,11 @@
 	
 	firebase.initializeApp(firebaseConfig);
 	
+	
 	var database = firebase.database();
+	
+	var _canvasRef = database.ref().child('canvas');
+	
 	
 	var canvas = document.getElementById('drawCanvas');
 	var ctx = canvas.getContext('2d');
@@ -532,11 +543,18 @@
 	var plotY = [];
 	var plotErase = [];
 	
+	addImage();
+	
 	function draw(e) {
 		if(!isActive) return;
 		
-		var x = e.clientX - canvas.offsetLeft;
-		var y = e.clientY - canvas.offsetTop;
+		var rect = canvas.getBoundingClientRect();
+		
+		//var x = e.clientX - canvas.offsetLeft;
+		//var y = e.clientY - canvas.offsetTop;
+		
+		var x = e.clientX - rect.left;
+		var y = e.clientY - rect.top;
 		
 		plotX.push(x);
 		plotY.push(y);
@@ -546,6 +564,11 @@
 	}
 	
 	function drawOnCanvas(xplot, yplot) {
+		if(isErase) {
+			startErase();
+		} else {
+			stopErase();
+		}
 		ctx.beginPath();
 		
 		if(!xplot.length || !yplot.length) return;
@@ -579,7 +602,7 @@
 	function startErase(e) {
 		ctx.strokeStyle = "white";
 		isErase = true;
-		ctx.lineWidth = '10';
+		ctx.lineWidth = '20';
 	}
 	
 	function stopErase(e) {
@@ -591,12 +614,13 @@
 	function serialize(canvas) {
 		return canvas.toDataURL();
 	}
-
+	
 	function deserialize(data, canvas) {
 		var img = new Image();
 		img.onload = function() {
 			canvas.width = img.width;
 			canvas.height = img.height;
+			console.log("nice");
 			canvas.getContext("2d").drawImage(img, 0, 0);
 		};
 
@@ -604,26 +628,20 @@
 	}
 	
 	function addImage() {
-		var div = document.getElementById("canvasPicture");
-		var canvas1;
-		if(div.children.length == 0){
-			canvas1 = document.createElement("canvas");
-			div.appendChild(canvas1);
-		}
-		else {
-			canvas1 = document.children[0];
-		}
-		database.ref().child('canvas').on('value',function(snapshot) {
+		var pictureCanvasId = "drawCanvas";
+		var canvas1 = document.getElementById(pictureCanvasId);
+		_canvasRef.on('value',function(snapshot) {
 			deserialize(snapshot.val().canvas, canvas1);
 		})
 		
 	}
 	
 	function writeCanvas(e) {
-		database.ref().child('canvas').set({
-			canvas: serialize(canvas)
+		var canvasContent = serialize(canvas);
+		_canvasRef.set({
+			canvas: canvasContent
 		}, function(e){
-			addImage();
+			
 		});
 		
 	}
