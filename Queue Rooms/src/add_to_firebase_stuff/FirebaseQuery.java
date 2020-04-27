@@ -329,7 +329,7 @@ public class FirebaseQuery {
 		DatabaseReference ref = myFirebase.getReference("Rooms");
 
 		Map<String, Object> update = new HashMap<>();
-		update.put(add.getID(), add);
+		update.put(add.getId(), add);
 		ref.updateChildrenAsync(update);
 	}
 
@@ -353,7 +353,7 @@ public class FirebaseQuery {
 		DatabaseReference ref = myFirebase.getReference("Rooms");
 
 		Map<String, Object> update = new HashMap<>();
-		update.put(remove.getID(), null);
+		update.put(remove.getId(), null);
 		ref.updateChildrenAsync(update);
 
 	}

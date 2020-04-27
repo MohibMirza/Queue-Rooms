@@ -17,6 +17,66 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  
+	<script>
+		var myVar = setInterval(updateQueue, 4000);
+		var myVar2 = setInterval(updateMessageBoard, 10000);
+		
+    	function updateQueue() {
+      		$.ajax({
+       			url: "Queue",
+       			data: {
+         			/* college: document.myform.college.value */
+       			},
+       			success: function(result) {
+         			$("#tableQueue").html(result);
+         			// alert("table updated!");
+       			}
+     		});
+      		return false;
+   		}
+    	
+    	function updateMessageBoard() {
+      		$.ajax({
+       			url: "MessageBoardServlet",
+       			data: {
+         			/* college: document.myform.college.value */
+       			},
+       			success: function(result) {
+         			$("#messageboard").html(result);
+         			// alert("MB updated!");
+       			}
+     		});
+      		return false;
+   		}
+    	
+    	function joinQueue() {
+      		$.ajax({
+       			url: "JoinQueue",
+       			data: {
+         			/* college: document.myform.college.value */
+       			},
+       			success: function() {
+       				alert("JOIN QUEUE");
+       			}
+     		});
+      		return false;
+   		}
+    	
+    	function leaveQueue() {
+      		$.ajax({
+       			url: "LeaveQueue",
+       			data: {
+         			/* college: document.myform.college.value */
+       			},
+       			success: function() {
+       			}
+     		});
+      		return false;
+   		}
+    	
+    	
+	   	</script>
 
 </head>
 
@@ -289,7 +349,10 @@
             <div class="col-lg-12">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Description</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"><% 
+                  	// CALL SESSION SCOPE
+                  
+                  %></h6>
                 </div>
                 <div class="card-body">
                   Please come to the front of the room for check off when it's your turn. Please arrive min. 5 mins early.
@@ -308,8 +371,8 @@
                     </div>
                     <div class = "row-right">
                       <!-- Join Queue Button triggers modal-->
-                      <a href="#JoinQueueModal" class="btn btn-primary" data-toggle="modal">Join</a>
-                      <a href="#QuitQueueModal" class="btn btn-warning" data-toggle="modal">Cancel</a>
+                      <a href="#JoinQueueModal" class="btn btn-primary" data-toggle="modal" onclick="joinQueue();">Join</a>
+                      <a href="#QuitQueueModal" class="btn btn-warning" data-toggle="modal" onclick="leaveQueue();">Cancel</a>
                     </div>
             
                   </div>
@@ -326,32 +389,8 @@
                           <th>Estimate Wait Time</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Abby B</td>
-                          <td>5 mins</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Bobby C</td>
-                          <td>15 mins</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Carly D</td>
-                          <td>25 mins</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Danny E</td>
-                          <td>35 mins</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>Edward F</td>
-                          <td>45 mins</td>
-                        </tr>
+                      <tbody id="tableQueue">
+
                       </tbody>
                     </table>
                   </div>
@@ -362,17 +401,14 @@
             </div>
 
             <div class="col-lg-6 mb-4">
-			
-			  <canvas id = "drawCanvas" <!--width = "800" height = "600"--> style="border:1px solid #000000;"></canvas>
-			
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Message Board</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="messageboard">
 
 
-                    <div class="font-weight-bold">
+<!--                     <div class="font-weight-bold">
                       <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
                       <div class="small text-gray-500">Emily Fowler · 18m</div>
                     </div>
@@ -389,7 +425,7 @@
                     <div class="font-weight-bold">
                       <div class="text-truncate">Make sure to check Piazza for tips!</div>
                       <div class="small text-gray-500">CP Tommy · 32m</div>
-                    </div>
+                    </div> -->
 
 
 
@@ -497,139 +533,8 @@
 
   <!-- Custom script from frontend-zi-->
   <script src="frontend-zi.js"></script>
-
-
-<script type="text/javascript">
-	
-	var firebaseConfig = {
-		apiKey: "AIzaSyDCm3yLjNFmA_irCAmk54tQVmr8lhf1PJc",
-		authDomain: "mytest1-ab6ae.firebaseapp.com",
-		databaseURL: "https://mytest1-ab6ae.firebaseio.com",
-		projectId: "mytest1-ab6ae",
-		storageBucket: "mytest1-ab6ae.appspot.com",
-		messagingSenderId: "628828202676",
-		appId: "1:628828202676:web:5a63c783999939d00719e1",
-		measurementId: "G-H77E4RTWY5"
-	};
-	
-	firebase.initializeApp(firebaseConfig);
-	
-	var database = firebase.database();
-	
-	var canvas = document.getElementById('drawCanvas');
-	var ctx = canvas.getContext('2d');
-	ctx.strokeStyle = "black";
-	var isErase = false;
-	
-	canvas.addEventListener('mousedown', startDraw, false);
-	canvas.addEventListener('mousemove', draw, false);
-	canvas.addEventListener('mouseup', endDraw, false);
-	// canvas.addEventListener('mouseout', endDraw, false);
-	
-	var isActive = false;
-	
-	var plotX = [];
-	var plotY = [];
-	var plotErase = [];
-	
-	function draw(e) {
-		if(!isActive) return;
-		
-		var x = e.clientX - canvas.offsetLeft;
-		var y = e.clientY - canvas.offsetTop;
-		
-		plotX.push(x);
-		plotY.push(y);
-		plotErase.push(isErase);
-		
-		drawOnCanvas(plotX, plotY);
-	}
-	
-	function drawOnCanvas(xplot, yplot) {
-		ctx.beginPath();
-		
-		if(!xplot.length || !yplot.length) return;
-		
-		ctx.moveTo(xplot[0], yplot[0]);
-		for(var i=1; i<xplot.length; i++) {
-			ctx.lineTo(xplot[i], yplot[i]);
-		}
-		
-		ctx.stroke();
-	}
-	
-	function startDraw(e) {
-		/*
-		prevX = currX;
-		prevY = currY;
-		currX = e.clientX - canvas.offsetLeft;
-		currY = e.clientY - canvas.offsetTop;
-		*/
-		isActive = true;
-	}
-	
-	function endDraw(e) {
-		isActive = false;
-		plotX = [];
-		plotY = [];
-		plotErase = [];
-		writeCanvas();
-	}
-
-	function startErase(e) {
-		ctx.strokeStyle = "white";
-		isErase = true;
-		ctx.lineWidth = '10';
-	}
-	
-	function stopErase(e) {
-		ctx.strokeStyle = "black";
-		isErase = false;
-		ctx.lineWidth = '1';
-	}
-
-	function serialize(canvas) {
-		return canvas.toDataURL();
-	}
-
-	function deserialize(data, canvas) {
-		var img = new Image();
-		img.onload = function() {
-			canvas.width = img.width;
-			canvas.height = img.height;
-			canvas.getContext("2d").drawImage(img, 0, 0);
-		};
-
-		img.src = data;
-	}
-	
-	function addImage() {
-		var div = document.getElementById("canvasPicture");
-		var canvas1;
-		if(div.children.length == 0){
-			canvas1 = document.createElement("canvas");
-			div.appendChild(canvas1);
-		}
-		else {
-			canvas1 = document.children[0];
-		}
-		database.ref().child('canvas').on('value',function(snapshot) {
-			deserialize(snapshot.val().canvas, canvas1);
-		})
-		
-	}
-	
-	function writeCanvas(e) {
-		database.ref().child('canvas').set({
-			canvas: serialize(canvas)
-		}, function(e){
-			addImage();
-		});
-		
-	}
-	
-</script>
-
+  
+  <script>updateQueue(); updateMessageBoard();</script>
 
 </body>
 
