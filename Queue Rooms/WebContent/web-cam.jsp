@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script> 
-  <title>SleepySAL - Video Capture </title>
+  <title>mySAL - Video Capture </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,11 +33,11 @@
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
           <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
               <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-flushed"></i>
               </div>
-              <div class="sidebar-brand-text mx-3">SleepySAL</div>
+              <div class="sidebar-brand-text mx-3">mySAL</div>
           </a>
 
           <!-- Divider -->
@@ -45,7 +45,7 @@
 
           <!-- Nav Item - Dashboard -->
           <li class="nav-item active">
-              <a class="nav-link" href="index.jsp">
+              <a class="nav-link" href="index.html">
                   <i class="fas fa-fw fa-home"></i>
                   <span>Home</span>
               </a>
@@ -63,29 +63,29 @@
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                       <h6 class="collapse-header">Favorites:</h6>
-                      <a class="collapse-item" href="blank.jsp">Timmy Nook</a>
-                      <a class="collapse-item" href="blank.jsp">Tommy Nook</a>
+                      <a class="collapse-item" href="blank.html">Timmy Nook</a>
+                      <a class="collapse-item" href="blank.html">Tommy Nook</a>
                   </div>
               </div>
           </li>
 
           <!-- Nav Item - Tables -->
           <li class="nav-item">
-            <a class="nav-link" href="rooms.jsp">
+            <a class="nav-link" href="rui-rooms.html">
               <i class="fas fa-fw fa-table"></i>
               <span>Rooms</span></a>
           </li>
 
           <!-- Nav Item - Tables -->
           <li class="nav-item">
-            <a class="nav-link" href="chat.jsp">
+            <a class="nav-link" href="chat.html">
               <i class="fas fa-fw fa-comment"></i>
               <span>Chat</span></a>
           </li>
 
           <!-- Nav Item - Tables -->
           <li class="nav-item">
-            <a class="nav-link" href="settings.jsp">
+            <a class="nav-link" href="settings.html">
               <i class="fas fa-fw fa-cog"></i>
               <span>Settings</span></a>
           </li>
@@ -483,7 +483,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.jsp">Logout</a>
+          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@ page import="usc.edu.eq.servlets.Capture" %>    
+<%! String screenshotSrc = Capture.getScreenshotSrc();  %>
+<%! String screenshotResponseURL = Capture.screenshotResponseURL; %>
+   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script> 
-  <title>SleepySAL - Screenshot </title>
+  <title>mySAL - Screen capture </title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,9 +40,9 @@
           <!-- Sidebar - Brand -->
           <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
               <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-flushed"></i>
+                  <i class="fas fa-laugh-wink"></i>
               </div>
-              <div class="sidebar-brand-text mx-3">SleepySAL</div>
+              <div class="sidebar-brand-text mx-3">mySAL</div>
           </a>
 
           <!-- Divider -->
@@ -74,6 +79,13 @@
             <a class="nav-link" href="rooms.jsp">
               <i class="fas fa-fw fa-table"></i>
               <span>Rooms</span></a>
+          </li>
+
+          <!-- Nav Item - Tables -->
+          <li class="nav-item">
+            <a class="nav-link" href="chat.jsp">
+              <i class="fas fa-fw fa-comment"></i>
+              <span>Chat</span></a>
           </li>
 
           <!-- Nav Item - Tables -->
@@ -405,50 +417,39 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Change your profile picture </h1>
+            <h1 class="h3 mb-0 text-gray-800">Screen capture</h1>
             <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
           </div>
           <div class="screenshot-container">
-            <label for="screenshot-url">Enter the url of the image you want to use. An example is show below with its url.</label>
-            <input type="text" class="form-control" id="screenshot-url" style="margin-bottom: 20px;" placeholder="Your url here.">
+            <label for="screenshot-url">Enter the url of the image you want to use.</label>
+            <input type="text" class="form-control" id="screenshotRequestURL" style="margin-bottom: 20px;" value="www.google.com">
             <button class="btn btn-primary" onclick="takeScreenshot();">Take Screenshot</button>
-            <p id="screenshot-responseText"> https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fanimalcrossing&psig=AOvVaw0SNuxoOP2rW1LXy-RMJM7j&ust=1587959628151000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLjzg-GYhekCFQAAAAAdAAAAABAD</p>
           </div>
+          <p id="result-url"></p>
+          <img id="screenshot-result" src="<%=screenshotResponseURL %>" style="margin-top: 10px; width:850px; height:500px">
           
-          <img id="screenshot-result" src="nook.jpg" style="margin-top: 10px">
-          
-          <div class="screenshot-container">
+           <div class="screenshot-container">
             <button id="use-photo-button" class="btn btn-success" onclick="useScreenshot();" style="margin-top: 10px; visibility: hidden;">Use This Photo</button>
           </div>
-
-          
           
 
         </div>
 
         <script>
             function takeScreenshot(){
-                var getURL = document.getElementById("screenshot-url");
-                getURL = "https://api.apiflash.com/v1/urltoimage?access_key=c452c24fe1e846ebb1b80d59c697eb21&url=http://" + getURL;
-                var screenshot;
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function(){
-                    if(this.readyState == 4 && this.status == 200){ // if screenshot successful, validated by servlet
-                        document.getElementById("screenshot-result").innerHTML = this.responseURL;
-                        document.getElementById("screenshot-responseText").src = this.responseText;
-                        document.getElementById("use-photo-button").style.visibility = "visible";
-                    }
-                    else{ //if screenshot unsuccessful, return an error message
-                      document.getElementById("sscreenshot-responseText").innerHTML = "Cannot load image. Please try again, or use another url.";
-                    }
-                }
-                xhttp.open("GET", getURL, true);
-                xhttp.send();
-
-                
-            
+            	
+				//send url to java class
+            	var xhttp = new XMLHttpRequest();
+				var screenshotRequestURL = document.getElementById("screenshotRequestURL").value;
+				//debug
+            	console.log(screenshotRequestURL);
+				xhttp.open("GET", "Capture?screenshotRequestURL=" + screenshotRequestURL, false);
+				xhttp.send();
+				document.getElementById("result-url").innerHTML = xhttp.responseText;
+				document.getElementById("screenshot-result").src = xhttp.responseText;
+				document.getElementById("use-photo-button").style.visibility = "visible";
             }
+
 
         </script>
 
