@@ -2,3 +2,4 @@ node_modules
 .metadata/*
 .project
 /Queue Rooms/build/
+/bin/
