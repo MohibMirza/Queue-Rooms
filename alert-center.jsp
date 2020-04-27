@@ -9,20 +9,10 @@
 <%//@ page import="java.util.ArrayList,java.util.List,queuerooms2.Alert,queuerooms2.FirebaseQuery" %>
 
 
-
-<%
-	String userID = request.getParameter("uid");
-	
-	String fullname = "temp";
-	
-%>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,8 +26,44 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">		
+  
+ 
+  	<script>
+      var myVar = setInterval(TopbarUpdate, 4000);
 
+    	function TopbarUpdate() {
+      		$.ajax({
+       			url: "TopbarUpdate",
+       			data: {
+       			},
+       			success: function(result) {
+         			$("#TopbarDisplay").html(result);
+       			}
+     		});
+      		return false;
+   		}
+	   	</script>
+
+
+		
+	<script>
+      var myVar = setInterval(updateAlert, 4000);
+
+    	function updateAlert() {
+      		$.ajax({
+       			url: "AlertsUpdate",
+       			data: {
+       			},
+       			success: function(result) {
+         			$("#AlertDisplay").html(result);
+       			}
+     		});
+      		return false;
+   		}
+	   	</script>
+		
+  
 </head>
 
 <body id="page-top">
@@ -166,18 +192,60 @@
               </div>
             </li>
 
+		
+
+
+
             <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            
+            <li id="TopbarDisplay" class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                
+                <%
+                String userid2 = (String) session.getAttribute("UserID");
+                //String userid2 = "I9dH5BF59AfcO5SPtZHCy2VhAwA3";
+        		        		
+                List<Alert> userAlerts2 = new ArrayList<Alert>();
+                userAlerts2= Alert.findAlerts(userid2);
+                try {
+        			Thread.sleep(4000);
+        		} catch (InterruptedException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+                %>     
+                
+                <span class="badge badge-danger badge-counter"><%=userAlerts2.size()%></span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
+             
+             
+             
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">                
+	                <h6 class="dropdown-header">
+	                  Alerts Center
+	                </h6>
+	               
+	                
+	                <%
+	                for (int i=0; i<userAlerts2.size(); i++) {   
+	                %>
+		                <a class="dropdown-item d-flex align-items-center" href="#">
+		                  <div class="mr-3">
+		                    <div class="icon-circle bg-primary">
+		                      <i class="fas fa-file-alt text-white"></i>
+		                    </div>
+		                  </div>
+		                  <div>
+		                    <div class="small text-gray-500"><%=userAlerts2.get(i).sender%></div>
+		                    <span class="font-weight-bold"><%=userAlerts2.get(i).message%></span>
+		                  </div>
+		                </a>
+	                <%}%>
+                
+                <!--  
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">
@@ -211,6 +279,8 @@
                     Spending Alert: We've noticed unusually high spending for your account.
                   </div>
                 </a>
+                -->
+                
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
@@ -364,13 +434,13 @@
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Recent Alerts</h6>
                 </div>
-                <div class="card-body">
+	                <div class="card-body">
+	                 	<div id="AlertDisplay">
+	                
+	                 <% //INSERT ALERTS HERE!!!!!!!!!!!!!
                 
-                
-                <% //INSERT ALERTS HERE!!!!!!!!!!!!!
-                
-                String userid = "I9dH5BF59AfcO5SPtZHCy2VhAwA3";
-
+	            String userid = (String) session.getAttribute("UserID");
+                //String userid = "I9dH5BF59AfcO5SPtZHCy2VhAwA3";
                 List<Alert> userAlerts = new ArrayList<Alert>();
                 userAlerts= Alert.findAlerts(userid);
                 
@@ -383,37 +453,13 @@
                     <div class="small text-gray-500"><%=userAlerts.get(i).sender %></div>
                    	</div>
                    	
-
-                   <br>
-                	
-                	
+                   <br>      	
                 <% } %>	
-                
+	              
 
-
-
-                    <div class="font-weight-bold">
-                      <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                      <div class="small text-gray-500">Emily Fowler · 18m</div>
-                    </div>
-
-                    <br>
-
-                    <div class="font-weight-bold">
-                      <div class="text-truncate">Where is everyone sitting?</div>
-                      <div class="small text-gray-500">CP Tommy · 20m</div>
-                    </div>
-
-                    <br>
-
-                    <div class="font-weight-bold">
-                      <div class="text-truncate">Make sure to check Piazza for tips!</div>
-                      <div class="small text-gray-500">CP Tommy · 32m</div>
-                    </div>
-
-
-
-                </div>
+	              
+	              		</div>
+	                </div>
               </div>
             </div>
 
