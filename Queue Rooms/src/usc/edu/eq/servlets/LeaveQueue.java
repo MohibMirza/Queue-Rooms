@@ -42,14 +42,14 @@ public class LeaveQueue extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		String id = (String) session.getAttribute("roomid");
-		String userid = (String) session.getAttribute("userid");
+		String userid = (String) session.getAttribute("UserID");
 		if(id == null) id = "";
 		if(userid == null) {
 			userid = "";
 			id = "";
 		}
 		id = "db5854bc-9c4c-4de8-83c1-16b45ddce0b9";
-		userid = "I9dH5BF59AfcO5SPtZHCy2VhAwA3";
+//		userid = "I9dH5BF59AfcO5SPtZHCy2VhAwA3";
 		Room room = FirebaseQuery.queryRoomID(id);
 		// room.removeUser(userid);
 		System.out.println("Add in remove function in room.");
