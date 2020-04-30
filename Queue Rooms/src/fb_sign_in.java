@@ -48,8 +48,9 @@ public class fb_sign_in extends HttpServlet {
 		request.setAttribute("fb_id", id);
 		request.setAttribute("fb_email", email);
 		request.setAttribute("fb_pic", picURL);
+		request.setAttribute("is_fb", "1");
 		
-		RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("homepage.jsp");
         rs.forward(request, response);
 		
 		//doGet(request, response);

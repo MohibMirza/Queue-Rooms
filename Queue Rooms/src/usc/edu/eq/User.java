@@ -2,7 +2,7 @@ package usc.edu.eq;
 import java.util.ArrayList;
 import java.util.List;
 
-import usc.edu.eq.room.Room;
+import add_to_firebase_stuff.*;
 
 public class User {
 	

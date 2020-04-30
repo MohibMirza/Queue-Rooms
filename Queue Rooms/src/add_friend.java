@@ -49,7 +49,7 @@ public class add_friend extends HttpServlet {
 		
 		User.addFriends(my_id, userid);
 		System.out.println("Back in add_friend going to dispatch");
-		RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("homepage.jsp");
         rs.forward(request, response);
 		
 	}

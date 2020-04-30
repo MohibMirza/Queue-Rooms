@@ -31,8 +31,7 @@
  var fb_id="<%=obj_Client_details.getId()%>";
  var fb_email="<%=obj_Client_details.getEmail()%>";
  var fb_name="<%=obj_Client_details.getUser_name()%>";
- var fb_pic="<%=obj_Client_details.getProfile_picture()%>
-		";
+ var fb_pic="<%=obj_Client_details.getProfile_picture()%>";
 
 		var form = $('<form action="' + 'fb_sign_in' + '" method="post">'
 				+ '<input type="text" name="id" value="' + fb_id + '" />'

@@ -147,7 +147,7 @@ public class java_bend extends HttpServlet {
     		            User.createUser(userid, (String)userRecord.getUid());
     		            
     		            request.setAttribute("UserID", (String)userRecord.getUid());
-    	            	RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
+    	            	RequestDispatcher rs = request.getRequestDispatcher("homepage.jsp");
     	                rs.forward(request, response);
     				} catch (FirebaseAuthException e) {
     					// TODO Auto-generated catch block

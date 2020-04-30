@@ -8,7 +8,7 @@
 	<title>My Whiteboard</title>
 </head>
 <body>
-	<canvas id = "drawCanvas" width = "800" height = "600" style="border:1px solid #000000;"></canvas>
+	<canvas id = "drawCanvas" width = "400" height = "300" style="border:1px solid #000000;"></canvas>
 	<button onclick="stopErase();">Draw</button>
 	<button onclick="startErase();">Erase</button>
 	<div id="canvasPicture">

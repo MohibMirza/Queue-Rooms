@@ -109,7 +109,9 @@ public class Login extends HttpServlet {
 	            	request.setAttribute("UserID", request_checker[0]);
 	            	request.setAttribute("Username", request_checker[1]);
 	            	request.setAttribute("normal_login", "1");
-	            	RequestDispatcher rs = request.getRequestDispatcher("zi/index.jsp");
+	            	request.getSession().setAttribute("UserID", request_checker[0]);
+	            	request.getSession().setAttribute("Username", request_checker[1]);
+	            	RequestDispatcher rs = request.getRequestDispatcher("homepage.jsp");
 	                rs.forward(request, response);
 	            	
 	            }
